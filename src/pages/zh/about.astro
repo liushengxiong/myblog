@@ -1,0 +1,80 @@
+---
+import PageHeading from "../../components/page-heading.astro";
+import Layout from "../../layouts/main.astro";
+import { useTranslations } from '../../i18n/ui.js';
+import { aboutContent } from '../../i18n/content.js';
+
+const lang = 'zh';
+const t = useTranslations(lang);
+const content = aboutContent[lang];
+---
+
+<Layout title={t('about.title')} description={t('about.description')}>
+  <section class="relative z-20 max-w-2xl mx-auto my-12 px-7 lg:px-0">
+    <PageHeading
+      title={t('about.title')}
+      description={t('about.description')}
+    />
+
+    <!-- Short Bio -->
+    <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">{t('about.shortBio')}</h2>
+    <div class="prose prose-neutral dark:prose-invert mb-10">
+      {content.shortBio.split('\n\n').map(p => <p>{p}</p>)}
+    </div>
+
+    <!-- Education -->
+    <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">{t('about.education')}</h2>
+    <div class="space-y-4 mb-10">
+      {content.education.map(edu => (
+        <div class="border-l-2 border-neutral-300 dark:border-neutral-700 pl-4">
+          <p class="font-semibold text-neutral-900 dark:text-neutral-100">{edu.school}</p>
+          <p class="text-neutral-600 dark:text-neutral-400">{edu.degree}</p>
+          <p class="text-sm text-neutral-500 dark:text-neutral-500">{edu.period}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Experience -->
+    <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">{t('about.experience')}</h2>
+    <div class="space-y-6 mb-10">
+      {content.experience.map(exp => (
+        <div class="border-l-2 border-neutral-300 dark:border-neutral-700 pl-4">
+          <div class="flex items-center justify-between mb-1">
+            <p class="font-semibold text-neutral-900 dark:text-neutral-100">{exp.role}</p>
+            <span class="text-sm text-neutral-500 dark:text-neutral-500">{exp.period}</span>
+          </div>
+          <p class="text-neutral-600 dark:text-neutral-400 mb-1">{exp.company}</p>
+          <p class="text-sm text-neutral-500 dark:text-neutral-500">{exp.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Why AI -->
+    <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">{t('about.whyAI')}</h2>
+    <div class="prose prose-neutral dark:prose-invert mb-10">
+      {content.whyAI.split('\n\n').map(p => <p>{p}</p>)}
+    </div>
+
+    <!-- Why Website -->
+    <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">{t('about.whyWebsite')}</h2>
+    <div class="prose prose-neutral dark:prose-invert mb-10">
+      {content.whyWebsite.split('\n\n').map(p => <p set:html={p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} />)}
+    </div>
+
+    <!-- Future Plans -->
+    <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">{t('about.futurePlans')}</h2>
+    <div class="prose prose-neutral dark:prose-invert mb-10">
+      {content.futurePlans.split('\n\n').map(p => <p set:html={p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')} />)}
+    </div>
+
+    <!-- Connect -->
+    <h2 class="mb-4 text-2xl font-bold dark:text-neutral-200">{t('about.connect')}</h2>
+    <div class="prose prose-neutral dark:prose-invert">
+      <p>如果你想保持联系，欢迎在社交媒体上关注我：</p>
+      <ul>
+        <li><a href="https://x.com/liushengxiong" target="_blank" class="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">Twitter / X</a></li>
+        <li><a href="https://github.com/liushengxiong" target="_blank" class="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">GitHub</a></li>
+      </ul>
+    </div>
+  </section>
+</Layout>

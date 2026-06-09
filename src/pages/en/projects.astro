@@ -1,0 +1,36 @@
+---
+import PageHeading from "../../components/page-heading.astro";
+import Layout from "../../layouts/main.astro";
+import { useTranslations } from '../../i18n/ui.js';
+import { projectsContent } from '../../i18n/content.js';
+
+const lang = 'en';
+const t = useTranslations(lang);
+const projects = projectsContent[lang];
+---
+
+<Layout title={t('projects.title')} description={t('projects.description')}>
+  <section class="relative z-20 max-w-2xl mx-auto my-12 px-7 lg:px-0">
+    <PageHeading
+      title={t('projects.title')}
+      description={t('projects.description')}
+    />
+
+    <div class="flex flex-col gap-6 my-8">
+      {projects.map((project) => (
+        <div class="p-6 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">{project.name}</h3>
+            <span class="text-xs px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-full text-neutral-600 dark:text-neutral-400 font-medium">{project.status}</span>
+          </div>
+          <p class="text-base text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed">{project.description}</p>
+          <div class="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span class="text-xs px-2 py-1 bg-neutral-50 dark:bg-neutral-900 rounded-md text-neutral-500 dark:text-neutral-500 border border-neutral-200 dark:border-neutral-700">{tag}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>

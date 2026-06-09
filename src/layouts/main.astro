@@ -2,17 +2,55 @@
 import Footer from "../components/footer.astro";
 import Header from "../components/header.astro";
 import SquareLines from "../components/square-lines.astro";
-const { title } = Astro.props;
+import { useTranslations, getLangFromUrl } from '../i18n/ui.js';
+
+const currentUrl = Astro.url;
+const currentLang = getLangFromUrl(currentUrl);
+const t = useTranslations(currentLang);
+
+const { title, description, image = '/assets/images/cover.png' } = Astro.props;
+const siteTitle = title ? `${title} | ${t('site.title')}` : t('site.title');
+const metaDescription = description || t('site.description');
+const canonicalUrl = Astro.site ? new URL(currentUrl.pathname, Astro.site).href : currentUrl.href;
+const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
+const alternateLang = currentLang === 'zh' ? 'en' : 'zh';
+const alternateUrl = Astro.site ? new URL(currentUrl.pathname.replace(`/${currentLang}/`, `/${alternateLang}/`), Astro.site).href : currentUrl.href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
+    <title>{siteTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="author" content={t('site.author')} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={currentLang} href={canonicalUrl} />
+    <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
-    <!-- Used to add dark mode right away, adding here prevents any flicker -->
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={currentLang === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:site_name" content={t('site.title')} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Keywords -->
+    <meta name="keywords" content={currentLang === 'zh' 
+      ? 'AI, 人工智能, 个人成长, 内容创业, 个人品牌, 一人公司, 商业模式, 认知升级' 
+      : 'AI, personal growth, content creation, solopreneur, business model, personal branding'} />
+
     <script is:inline>
       if (typeof Storage !== 'undefined') {
         if (
@@ -29,8 +67,8 @@ const { title } = Astro.props;
         border-radius: 20px;
       }
     </style>
-    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.png" />
-    <script src="../assets/css/main.css"></script>
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.png" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
     <Fragment set:html={import.meta.env.HEADER_INJECT} />
   </head>
   <body class="antialiased bg-white dark:bg-neutral-950">
@@ -38,7 +76,7 @@ const { title } = Astro.props;
     <Header />
     <slot />
     <Footer />
-    <script src="../assets/js/main.js"></script>
+    <script is:inline src="/assets/js/main.js"></script>
     <Fragment set:html={import.meta.env.FOOTER_INJECT} />
   </body>
 </html>
