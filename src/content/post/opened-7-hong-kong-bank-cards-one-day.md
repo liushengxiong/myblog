@@ -22,6 +22,8 @@ Before leaving, I did my homework. I researched every major bank's account openi
 
 But once I actually got there, I realized the biggest takeaway from this trip wasn't those seven bank cards. It was seeing Hong Kong itself with fresh eyes.
 
+![Photo: self-portrait at Victoria Harbour](/assets/images/posts/hk-bank-cards/image1.png)
+
 ---
 
 ## Before This Trip, My Impression of Hong Kong Was Superficial
@@ -50,6 +52,8 @@ One detail stuck with me: inside the carriages, the system displays the entire M
 
 And here's the kicker — there are no security checkpoints. You just walk in. The first time I experienced that, it felt almost strange.
 
+![Photo: Golden Bauhinia Square](/assets/images/posts/hk-bank-cards/image2.jpeg)
+
 ---
 
 ## On June 13, I Set Myself a Crazy Goal
@@ -72,6 +76,8 @@ Turns out, it's not that hard anymore. Many Hong Kong digital banks now offer fu
 
 That day, I roamed the city, hopped between free WiFi hotspots, downloaded apps, uploaded documents, did facial recognition, set passwords, and recorded account details. Over and over again. It took several hours. When the final approval came through, I finally exhaled.
 
+![Photo: six banking apps on my phone](/assets/images/posts/hk-bank-cards/image3.jpeg)
+
 ---
 
 ## The Results Were Better Than Expected
@@ -90,6 +96,8 @@ Once the banking marathon was over, I finally slowed down.
 
 I wandered through Tsim Sha Tsui, Mong Kok, Victoria Harbour, and Golden Bauhinia Square. I'd seen countless photos of the harbour at night, but standing there in person still hit differently. The sea breeze, the lights flickering on across the water, the reflections on the surface — no camera truly captures that feeling.
 
+![Photo: Victoria Harbour skyline](/assets/images/posts/hk-bank-cards/image4.jpeg)
+
 ---
 
 ## Mong Kok Showed Me a Different Side of Hong Kong
@@ -98,6 +106,8 @@ If Victoria Harbour represents Hong Kong's glamour, then Mong Kok is its soul.
 
 There are fewer tourist filters here. What you see is everyday life: street-side shops, cha chaan teng diners, people rushing past each other. It reminds you that Hong Kong isn't just a financial hub — it's home to millions of ordinary people living real lives.
 
+![Photo: Mong Kok street scene](/assets/images/posts/hk-bank-cards/image5.jpeg)
+
 ---
 
 ## I Even Drew a Fortune Stick at Wong Tai Sin
@@ -105,6 +115,8 @@ There are fewer tourist filters here. What you see is everyday life: street-side
 No trip to Hong Kong feels complete without visiting Wong Tai Sin Temple, so I went. The incense was thick, the queues were long — a mix of tourists and locals. I drew a fortune stick of my own.
 
 Honestly? It felt surprisingly accurate. I asked about relationships, hoping to meet someone who embraces an ordinary life but also loves to travel and explore.
+
+![Photo: at Wong Tai Sin Temple](/assets/images/posts/hk-bank-cards/image6.jpeg)
 
 ---
 

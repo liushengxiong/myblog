@@ -18,9 +18,11 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 
 表面上是探亲。实际上，这趟行程我还给自己安排了一个任务：**把港卡一次性研究明白。**
 
-出发前，我做了不少功课。研究各家银行的开户政策、内地人怎么开、开户奖励、资金如何进出、微信香港钱包和 Alipay HK。对内地居民2026年6月之后还能开通的港卡，我整理了一份可能是全网最全的港卡开卡及优惠资料。
+出发前，我做了不少功课。研究各家银行的开户政策、内地人怎么开、开户奖励、资金如何进出、微信香港钱包和 Alipay HK。对内地居民2026年6月之后还能开通的港卡，我整理了一份可能是全网最全的港卡开卡及优惠资料，需要的朋友可以查看：[港卡开卡及优惠攻略](https://gcn6kv81ebov.feishu.cn/wiki/Xr22wsHyei4IMtkoqyacvQ8CnAe)
 
 但真正到了香港以后我才发现，这趟旅程最大的收获，也许并不是那7张港卡。而是重新认识了香港这座城市。
+
+![图片来源：自拍](/assets/images/posts/hk-bank-cards/image1.png)
 
 ---
 
@@ -50,6 +52,8 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 
 更重要的是，这里没有层层安检，进站效率非常高。第一次体验的时候，甚至有点不习惯。
 
+![图片来源：自拍](/assets/images/posts/hk-bank-cards/image2.jpeg)
+
 ---
 
 ## 6月13日，我给自己定了一个疯狂目标
@@ -72,6 +76,8 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 
 那一天，我一边在香港游逛，一边找到街边的免费WiFi，下载APP、上传资料、做人脸识别、设置密码、记录账户，不断重复。起码花了好几个小时。等最后一家开户成功时，我才终于松了一口气。
 
+![图片来源：手机截图](/assets/images/posts/hk-bank-cards/image3.jpeg)
+
 ---
 
 ## 结果比我想象中顺利
@@ -82,6 +88,8 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 
 后来回头看，真正重要的并不是运气，而是准备工作。提前了解规则、提前准备材料、提前规划顺序，很多问题其实都能避免。
 
+如果朋友也想去香港开通港卡，可以查看这份可能是全网最全的2026年6月港卡开户攻略：[港卡开卡及优惠攻略](https://gcn6kv81ebov.feishu.cn/wiki/Xr22wsHyei4IMtkoqyacvQ8CnAe)
+
 ---
 
 ## 尖沙咀和维港，值得慢慢看
@@ -89,6 +97,8 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 办完港卡以后，我的节奏终于慢了下来。
 
 我去了尖沙咀、旺角、维多利亚港，也去了金紫荆广场。说实话，维港的夜景早就看过无数照片，但真正站在那里，依然会被震撼到。海风吹过来，对岸的灯光慢慢亮起，高楼的倒影映在海面上。照片很难还原那种感觉。
+
+![图片来源：自拍](/assets/images/posts/hk-bank-cards/image4.jpeg)
 
 ---
 
@@ -98,6 +108,8 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 
 这里没有那么多游客滤镜，更多的是普通人的生活。街边小店、茶餐厅、人来人往。你会发现，香港不仅仅是金融中心，它也是几百万普通人生活的地方。
 
+![图片来源：自拍](/assets/images/posts/hk-bank-cards/image5.jpeg)
+
 ---
 
 ## 黄大仙，我也去求了一支签
@@ -105,6 +117,8 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 来到香港，很多人都会去黄大仙，我自然也没有错过。那天香火很旺，排队的人很多，有游客，也有本地人。我也认真求了一支签。
 
 说真的，我觉得还挺灵的。这一签求的是姻缘，希望能尽快找到一个愿意过平平常常、普普通通生活，也愿意到处游历的奇女子。
+
+![图片来源：自拍](/assets/images/posts/hk-bank-cards/image6.jpeg)
 
 ---
 
@@ -130,7 +144,7 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 
 研究港卡期间，我发现很多人开完卡就结束了。其实香港银行的新客活动力度一直不小，有些银行奖励几百港币，有些银行奖励上千港币，甚至更多。如果提前规划，完全可以顺手把这些福利拿到手。
 
-而这些信息，网上往往比较零散。我前前后后花了很多时间才整理清楚。
+而这些信息，网上往往比较零散。我前前后后花了很多时间才整理清楚。这可能是全网最全的2026年6月港卡优惠活动了：[港卡开卡及优惠攻略](https://gcn6kv81ebov.feishu.cn/wiki/Xr22wsHyei4IMtkoqyacvQ8CnAe)
 
 ---
 
@@ -167,7 +181,7 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 - 资金进出路径
 - 常见失败原因
 
-如果你近期也准备去香港开港卡，建议提前收藏，做好功课再出发。
+如果你近期也准备去香港开港卡，建议直接收藏：[港卡开卡及优惠攻略](https://gcn6kv81ebov.feishu.cn/wiki/Xr22wsHyei4IMtkoqyacvQ8CnAe)
 
 ---
 
