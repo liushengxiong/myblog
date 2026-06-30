@@ -22,7 +22,7 @@ Before leaving, I did my homework. I researched every major bank's account openi
 
 But once I actually got there, I realized the biggest takeaway from this trip wasn't those seven bank cards. It was seeing Hong Kong itself with fresh eyes.
 
-![Photo: self-portrait at Victoria Harbour](/assets/images/posts/hk-bank-cards/image1.png)
+![Photo: self-portrait at Victoria Harbour](/assets/images/posts/hk-bank-cards/image1.jpeg)
 
 ---
 

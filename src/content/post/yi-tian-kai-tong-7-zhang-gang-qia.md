@@ -22,7 +22,7 @@ slug: "yi-tian-kai-tong-7-zhang-gang-qia"
 
 但真正到了香港以后我才发现，这趟旅程最大的收获，也许并不是那7张港卡。而是重新认识了香港这座城市。
 
-![图片来源：自拍](/assets/images/posts/hk-bank-cards/image1.png)
+![图片来源：自拍](/assets/images/posts/hk-bank-cards/image1.jpeg)
 
 ---
 
