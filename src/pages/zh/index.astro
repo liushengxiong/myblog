@@ -1,21 +1,38 @@
 ---
 import Button from "../../components/button.astro";
 import PostsLoop from "../../components/posts-loop.astro";
-import {
-	aboutContent,
-	projectsContent,
-	resourcesContent,
-} from "../../i18n/content.js";
 import { useTranslations } from "../../i18n/ui.js";
+import { getCollection } from "astro:content";
+import siteSettings from "../../content/data/site-settings.json";
 import Layout from "../../layouts/main.astro";
 
 const lang = "zh";
 const t = useTranslations(lang);
-const projects = projectsContent[lang];
-const resources = resourcesContent[lang];
+
+// Hero：读取 site-settings.json
+const hero = siteSettings?.hero;
+const heroTitle = hero?.title?.[lang] || t("home.title");
+const heroSubtitle = hero?.subtitle?.[lang] || t("home.subtitle");
+const heroIntro = hero?.intro?.[lang] || t("home.intro");
+const heroPortrait = hero?.portraitImage || "/assets/images/photo.png";
+const primaryCta = hero?.primaryCta?.[lang] || t("nav.posts");
+const secondaryCta = hero?.secondaryCta?.[lang] || t("nav.about");
+
+// Projects / Resources：从 Content Collection 读取，过滤 visible，按 order 排序
+const allProjects = await getCollection("projects");
+const projects = allProjects
+	.filter((p) => p.data.visible !== false)
+	.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+	.slice(0, 3);
+
+const allResources = await getCollection("resources");
+const resources = allResources
+	.filter((r) => r.data.visible !== false)
+	.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0))
+	.slice(0, 3);
 ---
 
-<Layout title={t('home.title')} description={t('site.description')}>
+<Layout description={heroSubtitle}>
   <!-- Hero Section -->
   <div
     class="relative z-20 w-full max-w-4xl mx-auto mt-16 px-7 md:mt-24 lg:mt-32 xl:px-0"
@@ -25,17 +42,17 @@ const resources = resourcesContent[lang];
         <h1
           class="mb-5 text-4xl font-bold leading-tight md:text-4xl lg:text-6xl dark:text-white"
         >
-          {t('home.title')}
+          {heroTitle}
         </h1>
         <p class="mb-4 text-lg font-medium text-neutral-700 dark:text-neutral-300">
-          {t('home.subtitle')}
+          {heroSubtitle}
         </p>
         <p class="mb-6 text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
-          {t('home.intro')}
+          {heroIntro}
         </p>
         <div class="flex gap-3">
-          <Button text={t('nav.posts')} link={`/${lang}/posts/`} />
-          <Button text={t('nav.about')} link={`/${lang}/about/`} />
+          <Button text={primaryCta} link={`/${lang}/posts/`} />
+          <Button text={secondaryCta} link={`/${lang}/about/`} />
         </div>
       </div>
       <div
@@ -56,8 +73,8 @@ const resources = resourcesContent[lang];
           </div>
           <div class="relative z-30 px-10">
             <img
-              src="/assets/images/photo.png"
-              alt="刘盛雄"
+              src={heroPortrait}
+              alt={heroTitle}
               loading="eager"
               decoding="auto"
               class="relative z-30 w-full aspect-[4/5] md:max-w-md mx-auto rounded-2xl object-cover dark:-translate-y-0.5"
@@ -95,22 +112,22 @@ const resources = resourcesContent[lang];
       <h2
         class="text-2xl font-bold leading-10 tracking-tight text-neutral-900 dark:text-neutral-100"
       >
-        {t('home.featuredPosts')}
+        {t('projects.title')}
       </h2>
       <a href={`/${lang}/projects/`} class="text-sm font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors">
         {t('home.viewAllProjects')} →
       </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.map((project) => (
+      {projects.map((entry) => (
         <div class="p-6 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors">
           <div class="flex items-center justify-between mb-3">
-            <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">{project.name}</h3>
-            <span class="text-xs px-2 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-full text-neutral-600 dark:text-neutral-400">{project.status}</span>
+            <h3 class="font-semibold text-neutral-900 dark:text-neutral-100">{entry.data.name?.[lang]}</h3>
+            <span class="text-xs px-2 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-full text-neutral-600 dark:text-neutral-400">{entry.data.status?.[lang]}</span>
           </div>
-          <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-4">{project.description}</p>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-4">{entry.data.description?.[lang]}</p>
           <div class="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
+            {(entry.data.tags?.[lang] ?? []).map((tag) => (
               <span class="text-xs text-neutral-500 dark:text-neutral-500">#{tag}</span>
             ))}
           </div>
@@ -127,10 +144,10 @@ const resources = resourcesContent[lang];
       {t('home.resources')}
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {resources.map((resource) => (
-        <a href={resource.link} class="block p-6 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors group">
-          <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors">{resource.title}</h3>
-          <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-2">{resource.description}</p>
+      {resources.map((entry) => (
+        <a href={entry.data.link} class="block p-6 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors group">
+          <h3 class="font-semibold text-neutral-900 dark:text-neutral-100 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors">{entry.data.title?.[lang]}</h3>
+          <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-2">{entry.data.description?.[lang]}</p>
         </a>
       ))}
     </div>

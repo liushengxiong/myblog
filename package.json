@@ -23,6 +23,8 @@
 	"packageManager": "pnpm@9.12.2",
 	"dependencies": {
 		"@astrojs/vercel": "^7.6.0",
+		"@octokit/rest": "^22.0.1",
+		"gray-matter": "^4.0.3",
 		"jose": "^6.2.10"
 	}
 }

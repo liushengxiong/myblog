@@ -9,8 +9,12 @@ function parseDate(dateStr) {
 	return new Date(`${month} ${Number.parseInt(day)}, ${year}`);
 }
 
+// 草稿隔离（Spec FR-9 / AC-4）：drafts/ 子目录下的 entry.slug 形如 "drafts/foo"，
+// 在公开列表中必须排除。同时按语言过滤。
 const filteredPosts = allPosts.filter(
-	(post) => post.data.locale === lang || (!post.data.locale && lang === "zh"),
+	(post) =>
+		!post.slug.startsWith("drafts/") &&
+		(post.data.locale === lang || (!post.data.locale && lang === "zh")),
 );
 
 const sortedPosts = filteredPosts

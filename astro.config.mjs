@@ -11,12 +11,11 @@ export default defineConfig({
 	integrations: [tailwind()],
 	vite: {
 		ssr: {
-			// 把 Admin 运行时依赖（如 jose）inline 到 serverless 函数 bundle，
+			// 把 Admin 运行时依赖 inline 到 serverless 函数 bundle，
 			// 避免 @astrojs/vercel 在 Windows 非管理员权限下尝试创建 symlink
 			// 时报 EPERM: operation not permitted, symlink。
-			// 后续 Phase 新增的 Admin 运行时依赖（如 gray-matter、zod、octokit）
-			// 也请追加到这个数组中。
-			noExternal: ["jose"],
+			// Phase 2 新增：@octokit/rest、gray-matter。
+			noExternal: ["jose", "@octokit/rest", "gray-matter"],
 		},
 	},
 	i18n: {

@@ -1,0 +1,14 @@
+{
+  "id": "content-creation-resources",
+  "title": {
+    "zh": "内容创作资源",
+    "en": "Content Creation Resources"
+  },
+  "description": {
+    "zh": "提升创作效率的模板和框架",
+    "en": "Templates and frameworks to boost creation efficiency"
+  },
+  "link": "#",
+  "visible": true,
+  "order": 3
+}

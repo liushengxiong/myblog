@@ -3,18 +3,28 @@ import Footer from "../components/footer.astro";
 import Header from "../components/header.astro";
 import SquareLines from "../components/square-lines.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/ui.js";
+// 读取 site-settings.json（singleton，不进 Content Collection）。
+// 保留 i18n/ui.js 作为 fallback，确保设置文件缺失或字段不合法时站点仍可运行。
+import siteSettings from "../content/data/site-settings.json";
 
 const currentUrl = Astro.url;
 const currentLang = getLangFromUrl(currentUrl);
 const t = useTranslations(currentLang);
 
-const { title, description, image = "/assets/images/cover.png" } = Astro.props;
-const siteTitle = title ? `${title} | ${t("site.title")}` : t("site.title");
-const metaDescription = description || t("site.description");
+const { title, description, image } = Astro.props;
+// 品牌：优先 site-settings.json，缺失时回退到 i18n/ui.js
+const brandTitle = siteSettings?.brand?.siteTitle?.[currentLang] || t("site.title");
+const siteTitle = title ? `${title} | ${brandTitle}` : brandTitle;
+const metaDescription = description || siteSettings?.seo?.defaultDescription?.[currentLang] || t("site.description");
+const siteAuthor = siteSettings?.brand?.siteAuthor?.[currentLang] || t("site.author");
+const keywords = siteSettings?.seo?.keywords?.[currentLang]?.join(", ") || "";
+const ogImageDefault = siteSettings?.seo?.ogImage || "/assets/images/cover.png";
+const ogImageRel = image || ogImageDefault;
+const favicon = siteSettings?.brand?.favicon || "/assets/images/favicon.png";
 const canonicalUrl = Astro.site
 	? new URL(currentUrl.pathname, Astro.site).href
 	: currentUrl.href;
-const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
+const ogImage = Astro.site ? new URL(ogImageRel, Astro.site).href : ogImageRel;
 const alternateLang = currentLang === "zh" ? "en" : "zh";
 const alternateUrl = Astro.site
 	? new URL(
@@ -31,7 +41,7 @@ const alternateUrl = Astro.site
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{siteTitle}</title>
     <meta name="description" content={metaDescription} />
-    <meta name="author" content={t('site.author')} />
+    <meta name="author" content={siteAuthor} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang={currentLang} href={canonicalUrl} />
     <link rel="alternate" hreflang={alternateLang} href={alternateUrl} />
@@ -44,7 +54,7 @@ const alternateUrl = Astro.site
     <meta property="og:description" content={metaDescription} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content={currentLang === 'zh' ? 'zh_CN' : 'en_US'} />
-    <meta property="og:site_name" content={t('site.title')} />
+    <meta property="og:site_name" content={brandTitle} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -54,9 +64,7 @@ const alternateUrl = Astro.site
     <meta name="twitter:image" content={ogImage} />
 
     <!-- Keywords -->
-    <meta name="keywords" content={currentLang === 'zh' 
-      ? 'AI, 人工智能, 个人成长, 内容创业, 个人品牌, 一人公司, 商业模式, 认知升级' 
-      : 'AI, personal growth, content creation, solopreneur, business model, personal branding'} />
+    {keywords && <meta name="keywords" content={keywords} />}
 
     <script is:inline>
       if (typeof Storage !== 'undefined') {
@@ -74,7 +82,7 @@ const alternateUrl = Astro.site
         border-radius: 20px;
       }
     </style>
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.png" />
+    <link rel="icon" type="image/x-icon" href={favicon} />
     <link rel="stylesheet" href="/assets/css/main.css" />
     <Fragment set:html={import.meta.env.HEADER_INJECT} />
   </head>

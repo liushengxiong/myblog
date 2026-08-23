@@ -4,8 +4,12 @@ import Layout from "../../../layouts/main.astro";
 
 export async function getStaticPaths() {
 	const postEntries = await getCollection("post");
+	// 草稿隔离（Spec FR-9 / AC-4）：排除 drafts/ 子目录下的 entry，
+	// 防止草稿生成公开 URL。
 	const zhPosts = postEntries.filter(
-		(entry) => entry.data.locale === "zh" || !entry.data.locale,
+		(entry) =>
+			!entry.slug.startsWith("drafts/") &&
+			(entry.data.locale === "zh" || !entry.data.locale),
 	);
 	return zhPosts.map((entry) => ({
 		params: { slug: entry.slug },

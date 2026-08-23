@@ -16,7 +16,23 @@
 			"dest": "_render"
 		},
 		{
+			"src": "^\\/admin\\/posts\\/new\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/posts\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
 			"src": "^\\/admin\\/posts\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/projects\\/new\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/projects\\/([^/]+?)\\/?$",
 			"dest": "_render"
 		},
 		{
@@ -25,6 +41,14 @@
 		},
 		{
 			"src": "^\\/admin\\/settings\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/tools\\/new\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/tools\\/([^/]+?)\\/?$",
 			"dest": "_render"
 		},
 		{
@@ -49,6 +73,58 @@
 		},
 		{
 			"src": "^\\/api\\/admin\\/auth\\/me\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/dashboard\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/images\\/upload\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/images\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/posts\\/([^/]+?)\\/check\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/posts\\/([^/]+?)\\/publish\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/posts\\/([^/]+?)\\/unpublish\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/posts\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/posts\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/projects\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/projects\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/settings\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/tools\\/([^/]+?)\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/tools\\/?$",
 			"dest": "_render"
 		}
 	]

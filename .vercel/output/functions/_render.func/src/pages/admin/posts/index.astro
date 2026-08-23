@@ -3,13 +3,31 @@ export const prerender = false;
 import type { APIContext } from "astro";
 import AdminLayout from "../../../layouts/admin.astro";
 import { getSession } from "../../../lib/auth";
+import { listAllPostFiles } from "../../../lib/posts";
+
 const session = await getSession(Astro as unknown as APIContext);
 if (!session) {
-	const redir = encodeURIComponent(Astro.url.pathname);
+	const redir = encodeURIComponent(Astro.url.pathname + Astro.url.search);
 	return Astro.redirect(`/admin/login?redirect=${redir}`);
 }
 const username = session.username;
+
+// 服务端直读文章列表 + frontmatter（避免前端二次 fetch）
+const files = await listAllPostFiles({ withMeta: true });
+const items = files.map((f) => ({
+	slug: f.slug,
+	status: f.status,
+	path: f.path,
+	sha: f.sha,
+	title: f.title || "",
+	description: f.description || "",
+	dateFormatted: f.dateFormatted || "",
+	locale: f.locale || "zh",
+	tags: f.tags || [],
+	featured: !!f.featured,
+}));
 ---
+
 <AdminLayout title="博客管理" username={username} active="posts">
   <div class="flex flex-wrap items-center gap-3">
     <div class="flex-1 min-w-0 rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
@@ -17,10 +35,18 @@ const username = session.username;
         type="search"
         name="q"
         data-admin-posts-search
-        placeholder="搜索文章标题 / 标签…（Phase 3 接入）"
+        placeholder="搜索标题或 slug…"
         class="w-full bg-transparent px-4 py-3 text-sm outline-none"
       />
     </div>
+    <label class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+      语言
+      <select name="lang" data-admin-posts-lang class="bg-transparent text-xs">
+        <option value="">全部</option>
+        <option value="zh">中文</option>
+        <option value="en">English</option>
+      </select>
+    </label>
     <a
       href="/admin/posts/new"
       class="inline-flex items-center gap-1 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white shadow hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
@@ -40,13 +66,95 @@ const username = session.username;
           <th class="px-5 py-3 text-right font-medium">操作</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
-        <tr>
-          <td colspan="5" class="px-5 py-10 text-center text-xs text-slate-500 dark:text-slate-400">
-            Phase 1 占位：文章列表会在 Phase 3 通过 /api/admin/posts 读取并填充。
-          </td>
-        </tr>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-200" data-admin-posts-tbody>
+        {items.length === 0 ? (
+          <tr>
+            <td colspan="5" class="px-5 py-10 text-center text-xs text-slate-500 dark:text-slate-400">
+              暂无文章。点击右上角"＋ 新建文章"开始。
+            </td>
+          </tr>
+        ) : items.map((p) => (
+          <tr data-admin-posts-row data-slug={p.slug} data-status={p.status} data-locale={p.locale} data-title={p.title}>
+            <td class="px-5 py-3">
+              <div class="font-medium">{p.title || "(未命名)"}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-mono break-all">{p.slug}</div>
+            </td>
+            <td class="px-5 py-3 text-xs">{p.locale || "zh"}</td>
+            <td class="px-5 py-3 text-xs">
+              {p.status === "draft" ? (
+                <span class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">草稿</span>
+              ) : (
+                <span class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200">已发布</span>
+              )}
+            </td>
+            <td class="px-5 py-3 text-xs">{p.dateFormatted || "—"}</td>
+            <td class="px-5 py-3 text-right text-xs">
+              <a
+                href={`/admin/posts/${encodeURIComponent(p.slug)}`}
+                class="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              >
+                编辑
+              </a>
+              <button
+                type="button"
+                data-admin-posts-delete
+                data-slug={p.slug}
+                data-sha={p.sha}
+                class="ml-1 inline-flex items-center gap-1 rounded-md border border-red-200 bg-white px-2.5 py-1 text-red-700 hover:bg-red-50 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300 dark:hover:bg-red-900/40"
+              >
+                删除
+              </button>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   </div>
 </AdminLayout>
+
+<script>
+  type AdminApi = {
+    fetch: <T = unknown>(
+      input: RequestInfo,
+      init?: RequestInit & { expectCsrf?: boolean },
+    ) => Promise<T>;
+    toast: (msg: string, level?: "info" | "success" | "error" | "warn") => void;
+  };
+  const api = (window as unknown as { AdminApi: AdminApi }).AdminApi;
+
+  // 搜索 + 语言筛选
+  const search = document.querySelector<HTMLInputElement>('[data-admin-posts-search]');
+  const lang = document.querySelector<HTMLSelectElement>('[data-admin-posts-lang]');
+  function applyFilter() {
+    const q = (search?.value || "").trim().toLowerCase();
+    const l = lang?.value || "";
+    document.querySelectorAll<HTMLTableRowElement>('[data-admin-posts-row]').forEach((row) => {
+      const slug = (row.dataset.slug || "").toLowerCase();
+      const title = (row.dataset.title || "").toLowerCase();
+      const rowLang = row.dataset.locale || "zh";
+      const showByQ = !q || slug.includes(q) || title.includes(q);
+      const showByL = !l || rowLang === l;
+      row.style.display = showByQ && showByL ? "" : "none";
+    });
+  }
+  search?.addEventListener("input", applyFilter);
+  lang?.addEventListener("change", applyFilter);
+
+  // 删除二次确认（中文）
+  document.querySelectorAll<HTMLButtonElement>("[data-admin-posts-delete]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const slug = btn.dataset.slug;
+      const sha = btn.dataset.sha;
+      if (!slug) return;
+      const ok = window.confirm(`确认删除文章 "${slug}"？\n\n此操作会立即在 GitHub 提交一次删除 commit，不可撤销。`);
+      if (!ok) return;
+      try {
+        await api.fetch(`/api/admin/posts/${encodeURIComponent(slug)}?sha=${encodeURIComponent(sha || "")}`, { method: "DELETE" });
+        api.toast("已提交删除 commit，等待 Vercel 部署。", "success");
+        btn.closest("tr")?.remove();
+      } catch {
+        // toast 已在 apiFetch 中弹出
+      }
+    });
+  });
+</script>

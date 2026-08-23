@@ -1,6 +1,13 @@
 ---
+// Logo 组件：读取 site-settings.json 的 brand.logoText（fallback 到 siteTitle），
+// 字段缺失时回退到硬编码默认值。
+import siteSettings from "../content/data/site-settings.json";
+
 const { lang = "zh" } = Astro.props;
-const siteName = lang === "en" ? "Leo Liu" : "刘盛雄";
+const siteName =
+	siteSettings?.brand?.logoText?.[lang] ||
+	siteSettings?.brand?.siteTitle?.[lang] ||
+	(lang === "en" ? "Leo Liu" : "刘盛雄");
 const homeUrl = `/${lang}/`;
 ---
 <a

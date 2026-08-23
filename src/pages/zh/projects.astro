@@ -1,12 +1,17 @@
 ---
 import PageHeading from "../../components/page-heading.astro";
-import { projectsContent } from "../../i18n/content.js";
 import { useTranslations } from "../../i18n/ui.js";
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/main.astro";
 
 const lang = "zh";
 const t = useTranslations(lang);
-const projects = projectsContent[lang];
+
+// 从 Content Collection 读取，过滤 visible，按 order 排序
+const allProjects = await getCollection("projects");
+const projects = allProjects
+	.filter((p) => p.data.visible !== false)
+	.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
 
 <Layout title={t('projects.title')} description={t('projects.description')}>
@@ -17,15 +22,15 @@ const projects = projectsContent[lang];
     />
 
     <div class="flex flex-col gap-6 my-8">
-      {projects.map((project) => (
+      {projects.map((entry) => (
         <div class="p-6 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700">
           <div class="flex items-center justify-between mb-3">
-            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">{project.name}</h3>
-            <span class="text-xs px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-full text-neutral-600 dark:text-neutral-400 font-medium">{project.status}</span>
+            <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">{entry.data.name?.[lang]}</h3>
+            <span class="text-xs px-3 py-1 bg-neutral-100 dark:bg-neutral-800 rounded-full text-neutral-600 dark:text-neutral-400 font-medium">{entry.data.status?.[lang]}</span>
           </div>
-          <p class="text-base text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed">{project.description}</p>
+          <p class="text-base text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed">{entry.data.description?.[lang]}</p>
           <div class="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
+            {(entry.data.tags?.[lang] ?? []).map((tag) => (
               <span class="text-xs px-2 py-1 bg-neutral-50 dark:bg-neutral-900 rounded-md text-neutral-500 dark:text-neutral-500 border border-neutral-200 dark:border-neutral-700">{tag}</span>
             ))}
           </div>

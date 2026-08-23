@@ -2,11 +2,21 @@
 import PageHeading from "../../components/page-heading.astro";
 import { aboutContent } from "../../i18n/content.js";
 import { useTranslations } from "../../i18n/ui.js";
+import siteSettings from "../../content/data/site-settings.json";
 import Layout from "../../layouts/main.astro";
 
 const lang = "zh";
 const t = useTranslations(lang);
 const content = aboutContent[lang];
+
+// 社交链接：从 site-settings.json 读取，仅渲染非空字段
+const social = siteSettings?.social;
+const socials = [
+	{ key: "twitter", href: social?.twitter, label: "Twitter / X" },
+	{ key: "github", href: social?.github, label: "GitHub" },
+	{ key: "linkedin", href: social?.linkedin, label: "LinkedIn" },
+	{ key: "email", href: social?.email, label: "Email" },
+].filter((s) => s.href && s.href.trim() !== "");
 ---
 
 <Layout title={t('about.title')} description={t('about.description')}>
@@ -72,8 +82,16 @@ const content = aboutContent[lang];
     <div class="prose prose-neutral dark:prose-invert">
       <p>如果你想保持联系，欢迎在社交媒体上关注我：</p>
       <ul>
-        <li><a href="https://x.com/liushengxiong" target="_blank" class="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">Twitter / X</a></li>
-        <li><a href="https://github.com/liushengxiong" target="_blank" class="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">GitHub</a></li>
+        {socials.map((s) => (
+          <li>
+            <a
+              href={s.href}
+              target={s.href.startsWith("http") ? "_blank" : undefined}
+              rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              class="text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            >{s.label}</a>
+          </li>
+        ))}
       </ul>
     </div>
   </section>

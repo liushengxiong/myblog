@@ -1,29 +1,229 @@
 ---
+/**
+ * 工具列表页（Task 4A.1b / Spec FR-5 / AC-5）
+ *
+ * 功能：
+ *  - 服务端直读工具列表（listDataItems + TOOL_SCHEMA）
+ *  - 表格展示：排序、ID、名称（中/英）、可见、操作
+ *  - 上移/下移按钮 → PUT /api/admin/tools（原子重排）
+ *  - 新增按钮 → /admin/tools/new
+ *  - 编辑链接 → /admin/tools/[id]
+ *  - 删除按钮（二次确认）
+ */
 export const prerender = false;
 import type { APIContext } from "astro";
 import AdminLayout from "../../../layouts/admin.astro";
 import { getSession } from "../../../lib/auth";
+import { listDataItems } from "../../../lib/data-items";
+import { PREFIX_TOOLS } from "../../../lib/github";
+import { TOOL_SCHEMA, type Tool } from "../../../lib/schemas";
+
 const session = await getSession(Astro as unknown as APIContext);
 if (!session) {
-	const redir = encodeURIComponent(Astro.url.pathname);
+	const redir = encodeURIComponent(Astro.url.pathname + Astro.url.search);
 	return Astro.redirect(`/admin/login?redirect=${redir}`);
 }
 const username = session.username;
+
+let items: { id: string; path: string; sha: string; data: Tool }[] = [];
+let loadError = "";
+try {
+	const list = await listDataItems<Tool>(PREFIX_TOOLS, { schema: TOOL_SCHEMA });
+	list.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+	items = list.map((i) => ({ id: i.id, path: i.path, sha: i.sha, data: i.data }));
+} catch (e) {
+	loadError = e instanceof Error ? e.message : String(e);
+}
 ---
+
 <AdminLayout title="工具管理" username={username} active="tools">
   <div class="flex flex-wrap items-center justify-between gap-3">
     <p class="text-sm text-slate-600 dark:text-slate-300">
-      工具列表用于控制首页“工具”卡片。数据存储于 <code>src/content/tools/*.json</code>，Phase 4 接入。
+      工具列表用于控制首页“工具”卡片。数据存储于 <code>src/content/tools/*.json</code>
     </p>
-    <button
-      type="button"
-      disabled
-      class="inline-flex items-center gap-1 rounded-lg bg-slate-300 px-4 py-3 text-sm font-medium text-slate-700 shadow cursor-not-allowed opacity-80 dark:bg-slate-700 dark:text-slate-200"
+    <a
+      href="/admin/tools/new"
+      class="inline-flex items-center gap-1 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white shadow hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
     >
-      ＋ 新增工具（Phase 4）
-    </button>
+      ＋ 新增工具
+    </a>
   </div>
-  <div class="rounded-xl border border-slate-200 bg-white p-10 text-center text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
-    占位页面。Phase 4 实现 CRUD 与拖拽排序。
+
+  {loadError && (
+    <div class="mt-4 rounded-lg border border-red-200 bg-red-50 p-4 text-xs text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
+      加载失败：{loadError}
+    </div>
+  )}
+
+  <div class="mt-5 overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+    <table class="min-w-full text-sm">
+      <thead class="bg-slate-50 text-left text-xs text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
+        <tr>
+          <th class="px-5 py-3 font-medium">排序</th>
+          <th class="px-5 py-3 font-medium">ID</th>
+          <th class="px-5 py-3 font-medium">名称</th>
+          <th class="px-5 py-3 font-medium">可见</th>
+          <th class="px-5 py-3 font-medium">推荐</th>
+          <th class="px-5 py-3 text-right font-medium">操作</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-200" data-admin-tools-tbody>
+        {items.length === 0 ? (
+          <tr>
+            <td colspan="6" class="px-5 py-10 text-center text-xs text-slate-500 dark:text-slate-400">
+              暂无工具。点击右上角“＋ 新增工具”开始。
+            </td>
+          </tr>
+        ) : items.map((t, idx) => (
+          <tr
+            data-admin-tools-row
+            data-id={t.id}
+            data-sha={t.sha}
+            data-order={t.data.order ?? 0}
+            data-first={idx === 0 ? "1" : "0"}
+            data-last={idx === items.length - 1 ? "1" : "0"}
+          >
+            <td class="px-5 py-3">
+              <div class="inline-flex flex-col gap-0.5">
+                <button
+                  type="button"
+                  data-admin-tools-up
+                  disabled={idx === 0}
+                  class="rounded border border-slate-200 bg-white px-1.5 py-0.5 text-xs text-slate-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                  title="上移"
+                  aria-label="上移"
+                >↑</button>
+                <button
+                  type="button"
+                  data-admin-tools-down
+                  disabled={idx === items.length - 1}
+                  class="rounded border border-slate-200 bg-white px-1.5 py-0.5 text-xs text-slate-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                  title="下移"
+                  aria-label="下移"
+                >↓</button>
+              </div>
+              <span class="ml-2 text-xs text-slate-400">#{t.data.order ?? 0}</span>
+            </td>
+            <td class="px-5 py-3 font-mono text-xs break-all">{t.id}</td>
+            <td class="px-5 py-3">
+              <div class="font-medium">{t.data.name?.zh || "(未命名)"}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400">{t.data.name?.en}</div>
+            </td>
+            <td class="px-5 py-3">
+              {t.data.visible ? (
+                <span class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-xs text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200">显示</span>
+              ) : (
+                <span class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">隐藏</span>
+              )}
+            </td>
+            <td class="px-5 py-3 text-xs">
+              {t.data.featured ? "★ 推荐" : "—"}
+            </td>
+            <td class="px-5 py-3 text-right text-xs">
+              <a
+                href={`/admin/tools/${encodeURIComponent(t.id)}`}
+                class="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              >
+                编辑
+              </a>
+              <button
+                type="button"
+                data-admin-tools-delete
+                data-id={t.id}
+                data-sha={t.sha}
+                class="ml-1 inline-flex items-center gap-1 rounded-md border border-red-200 bg-white px-2.5 py-1 text-red-700 hover:bg-red-50 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300 dark:hover:bg-red-900/40"
+              >
+                删除
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
 </AdminLayout>
+
+<script>
+  type AdminApi = {
+    fetch: <T = unknown>(
+      input: RequestInfo,
+      init?: RequestInit & { expectCsrf?: boolean },
+    ) => Promise<T>;
+    toast: (msg: string, level?: "info" | "success" | "error" | "warn") => void;
+  };
+  const api = (window as unknown as { AdminApi: AdminApi }).AdminApi;
+
+  type ToolRow = { id: string; order: number };
+
+  // 收集当前表格行顺序（按 DOM 顺序，过滤未隐藏行）
+  function collectOrder(): ToolRow[] {
+    const rows = document.querySelectorAll<HTMLTableRowElement>("[data-admin-tools-row]");
+    const out: ToolRow[] = [];
+    rows.forEach((r, idx) => {
+      out.push({ id: r.dataset.id || "", order: idx });
+    });
+    return out;
+  }
+
+  async function persistOrder() {
+    const items = collectOrder();
+    if (items.length === 0) return;
+    try {
+      await api.fetch("/api/admin/tools", {
+        method: "PUT",
+        body: JSON.stringify({ items }),
+      });
+      api.toast("排序已更新。", "success");
+      // 刷新页面以同步服务端的 order 值与按钮 disabled 状态
+      setTimeout(() => window.location.reload(), 400);
+    } catch {
+      // toast 已在 apiFetch 中弹出
+    }
+  }
+
+  // 交换相邻两行 DOM
+  function swapRows(a: HTMLTableRowElement, b: HTMLTableRowElement) {
+    const parent = a.parentNode;
+    if (!parent) return;
+    parent.insertBefore(b, a);
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-admin-tools-up]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const row = btn.closest<HTMLTableRowElement>("[data-admin-tools-row]");
+      if (!row) return;
+      const prev = row.previousElementSibling as HTMLTableRowElement | null;
+      if (!prev || !prev.hasAttribute("data-admin-tools-row")) return;
+      swapRows(row, prev);
+      void persistOrder();
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-admin-tools-down]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const row = btn.closest<HTMLTableRowElement>("[data-admin-tools-row]");
+      if (!row) return;
+      const next = row.nextElementSibling as HTMLTableRowElement | null;
+      if (!next || !next.hasAttribute("data-admin-tools-row")) return;
+      swapRows(next, row);
+      void persistOrder();
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-admin-tools-delete]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      const sha = btn.dataset.sha;
+      if (!id) return;
+      const ok = window.confirm(`确认删除工具 "${id}"？\n\n此操作会立即在 GitHub 提交一次删除 commit，不可撤销。`);
+      if (!ok) return;
+      try {
+        await api.fetch(`/api/admin/tools/${encodeURIComponent(id)}?sha=${encodeURIComponent(sha || "")}`, { method: "DELETE" });
+        api.toast("已提交删除 commit，等待 Vercel 部署。", "success");
+        btn.closest("tr")?.remove();
+      } catch {
+        // toast 已在 apiFetch 中弹出
+      }
+    });
+  });
+</script>
