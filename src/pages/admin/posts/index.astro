@@ -1,0 +1,52 @@
+---
+export const prerender = false;
+import type { APIContext } from "astro";
+import AdminLayout from "../../../layouts/admin.astro";
+import { getSession } from "../../../lib/auth";
+const session = await getSession(Astro as unknown as APIContext);
+if (!session) {
+	const redir = encodeURIComponent(Astro.url.pathname);
+	return Astro.redirect(`/admin/login?redirect=${redir}`);
+}
+const username = session.username;
+---
+<AdminLayout title="博客管理" username={username} active="posts">
+  <div class="flex flex-wrap items-center gap-3">
+    <div class="flex-1 min-w-0 rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+      <input
+        type="search"
+        name="q"
+        data-admin-posts-search
+        placeholder="搜索文章标题 / 标签…（Phase 3 接入）"
+        class="w-full bg-transparent px-4 py-3 text-sm outline-none"
+      />
+    </div>
+    <a
+      href="/admin/posts/new"
+      class="inline-flex items-center gap-1 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white shadow hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+    >
+      ＋ 新建文章
+    </a>
+  </div>
+
+  <div class="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+    <table class="min-w-full text-sm">
+      <thead class="bg-slate-50 text-left text-xs text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
+        <tr>
+          <th class="px-5 py-3 font-medium">标题 / Slug</th>
+          <th class="px-5 py-3 font-medium">语言</th>
+          <th class="px-5 py-3 font-medium">状态</th>
+          <th class="px-5 py-3 font-medium">发布日期</th>
+          <th class="px-5 py-3 text-right font-medium">操作</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
+        <tr>
+          <td colspan="5" class="px-5 py-10 text-center text-xs text-slate-500 dark:text-slate-400">
+            Phase 1 占位：文章列表会在 Phase 3 通过 /api/admin/posts 读取并填充。
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</AdminLayout>

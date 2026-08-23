@@ -1,9 +1,9 @@
 {
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/zh/",
-      "permanent": true
-    }
-  ]
+	"redirects": [
+		{
+			"source": "/",
+			"destination": "/zh/",
+			"permanent": true
+		}
+	]
 }

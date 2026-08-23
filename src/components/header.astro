@@ -1,7 +1,11 @@
 ---
-import { navigation } from '../i18n/navigation.js';
-import { useTranslations, getLangFromUrl, getRouteFromUrl } from '../i18n/ui.js';
-import Logo from './logo.astro';
+import { navigation } from "../i18n/navigation.js";
+import {
+	getLangFromUrl,
+	getRouteFromUrl,
+	useTranslations,
+} from "../i18n/ui.js";
+import Logo from "./logo.astro";
 
 const currentUrl = Astro.url;
 const currentLang = getLangFromUrl(currentUrl);
@@ -9,7 +13,7 @@ const currentRoute = getRouteFromUrl(currentUrl);
 const t = useTranslations(currentLang);
 
 const menus = navigation[currentLang];
-const otherLang = currentLang === 'zh' ? 'en' : 'zh';
+const otherLang = currentLang === "zh" ? "en" : "zh";
 const otherLangUrl = `/${otherLang}${currentRoute}`;
 ---
 

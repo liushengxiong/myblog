@@ -2,27 +2,29 @@
 import { getCollection } from "astro:content";
 const allPosts = await getCollection("post");
 
-const { count, lang = 'zh' } = Astro.props;
+const { count, lang = "zh" } = Astro.props;
 
 function parseDate(dateStr) {
-  const [month, day, year] = dateStr.split(" ");
-  return new Date(`${month} ${parseInt(day)}, ${year}`);
+	const [month, day, year] = dateStr.split(" ");
+	return new Date(`${month} ${Number.parseInt(day)}, ${year}`);
 }
 
-const filteredPosts = allPosts.filter(post => post.data.locale === lang || (!post.data.locale && lang === 'zh'));
+const filteredPosts = allPosts.filter(
+	(post) => post.data.locale === lang || (!post.data.locale && lang === "zh"),
+);
 
 const sortedPosts = filteredPosts
-  .map((post) => ({
-    ...post,
-    date: parseDate(post.data.dateFormatted),
-  }))
-  .sort((a, b) => b.date.getTime() - a.date.getTime());
+	.map((post) => ({
+		...post,
+		date: parseDate(post.data.dateFormatted),
+	}))
+	.sort((a, b) => b.date.getTime() - a.date.getTime());
 
 const postsLoop = sortedPosts.slice(0, count).map((post) => {
-  return {
-    ...(post.data || {}),
-    link: `/${lang}/post/${post.slug}/`,
-  };
+	return {
+		...(post.data || {}),
+		link: `/${lang}/post/${post.slug}/`,
+	};
 });
 ---
 

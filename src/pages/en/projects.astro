@@ -1,10 +1,10 @@
 ---
 import PageHeading from "../../components/page-heading.astro";
+import { projectsContent } from "../../i18n/content.js";
+import { useTranslations } from "../../i18n/ui.js";
 import Layout from "../../layouts/main.astro";
-import { useTranslations } from '../../i18n/ui.js';
-import { projectsContent } from '../../i18n/content.js';
 
-const lang = 'en';
+const lang = "en";
 const t = useTranslations(lang);
 const projects = projectsContent[lang];
 ---

@@ -1,0 +1,73 @@
+---
+/**
+ * /admin/login  登录页（不需要身份校验）
+ */
+const params = new URLSearchParams(Astro.url.search);
+const redirect = params.get("redirect");
+const safeRedirect =
+	redirect?.startsWith("/") && !redirect.startsWith("//")
+		? redirect
+		: "/admin/";
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>登录后台 · liushengxiong.com</title>
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+  </head>
+  <body class="min-h-screen grid place-items-center bg-slate-100 dark:bg-slate-950 px-4 py-10 text-slate-900 dark:text-slate-100">
+    <div class="w-full max-w-sm rounded-2xl border border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-900">
+      <div class="px-7 py-7 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-black text-lg">L</span>
+          <div>
+            <h1 class="text-lg font-semibold">登录内容管理后台</h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              仅管理员可访问。登录失败 5 次后将被限流 15 分钟。
+            </p>
+          </div>
+        </div>
+      </div>
+      <form data-admin-login method="post" action="/api/admin/auth/login" class="px-7 py-7 space-y-4" data-redirect={safeRedirect}>
+        <div>
+          <label class="block text-xs font-medium mb-1.5" for="username">用户名</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            required
+            autocomplete="username"
+            class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-slate-900 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-white dark:focus:bg-slate-900"
+            placeholder="admin"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-medium mb-1.5" for="password">密码</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autocomplete="current-password"
+            class="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none focus:border-slate-900 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-white dark:focus:bg-slate-900"
+            placeholder="请输入密码"
+          />
+        </div>
+        <div class="pt-1">
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-slate-900 px-3 py-2.5 text-sm font-medium text-white shadow-md hover:bg-slate-800 disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"
+          >
+            登录后台
+          </button>
+        </div>
+        <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400 pt-2">
+          重要：后台会通过 GitHub API 修改仓库内容。绝对不要分享你的登录凭据。
+        </p>
+      </form>
+    </div>
+    <script type="module" src="/src/assets/js/admin.ts"></script>
+  </body>
+</html>

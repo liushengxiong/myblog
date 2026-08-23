@@ -1,11 +1,15 @@
 ---
-import Layout from "../../layouts/main.astro";
 import Button from "../../components/button.astro";
 import PostsLoop from "../../components/posts-loop.astro";
-import { useTranslations } from '../../i18n/ui.js';
-import { aboutContent, projectsContent, resourcesContent } from '../../i18n/content.js';
+import {
+	aboutContent,
+	projectsContent,
+	resourcesContent,
+} from "../../i18n/content.js";
+import { useTranslations } from "../../i18n/ui.js";
+import Layout from "../../layouts/main.astro";
 
-const lang = 'en';
+const lang = "en";
 const t = useTranslations(lang);
 const projects = projectsContent[lang];
 const resources = resourcesContent[lang];

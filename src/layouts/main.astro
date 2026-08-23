@@ -2,19 +2,26 @@
 import Footer from "../components/footer.astro";
 import Header from "../components/header.astro";
 import SquareLines from "../components/square-lines.astro";
-import { useTranslations, getLangFromUrl } from '../i18n/ui.js';
+import { getLangFromUrl, useTranslations } from "../i18n/ui.js";
 
 const currentUrl = Astro.url;
 const currentLang = getLangFromUrl(currentUrl);
 const t = useTranslations(currentLang);
 
-const { title, description, image = '/assets/images/cover.png' } = Astro.props;
-const siteTitle = title ? `${title} | ${t('site.title')}` : t('site.title');
-const metaDescription = description || t('site.description');
-const canonicalUrl = Astro.site ? new URL(currentUrl.pathname, Astro.site).href : currentUrl.href;
+const { title, description, image = "/assets/images/cover.png" } = Astro.props;
+const siteTitle = title ? `${title} | ${t("site.title")}` : t("site.title");
+const metaDescription = description || t("site.description");
+const canonicalUrl = Astro.site
+	? new URL(currentUrl.pathname, Astro.site).href
+	: currentUrl.href;
 const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
-const alternateLang = currentLang === 'zh' ? 'en' : 'zh';
-const alternateUrl = Astro.site ? new URL(currentUrl.pathname.replace(`/${currentLang}/`, `/${alternateLang}/`), Astro.site).href : currentUrl.href;
+const alternateLang = currentLang === "zh" ? "en" : "zh";
+const alternateUrl = Astro.site
+	? new URL(
+			currentUrl.pathname.replace(`/${currentLang}/`, `/${alternateLang}/`),
+			Astro.site,
+		).href
+	: currentUrl.href;
 ---
 
 <!doctype html>

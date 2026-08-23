@@ -1,0 +1,55 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^\\/_image$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/posts\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/projects\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/settings\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/tools\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/admin\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/auth\\/csrf\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/auth\\/login\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/auth\\/logout\\/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^\\/api\\/admin\\/auth\\/me\\/?$",
+			"dest": "_render"
+		}
+	]
+}
