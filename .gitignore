@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# vercel build output (prebuilt artifacts must not be committed)
+.vercel/
 
 # dependencies
 node_modules/
@@ -22,3 +24,12 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# npm cache (should never be in project)
+.npm-cache/
+
+# npm lockfile (project uses pnpm, not npm)
+package-lock.json
+
+# obsidian vault (unrelated to blog source)
+我的博客/
