@@ -1,7 +1,11 @@
 ---
 /**
  * /admin/login  登录页（不需要身份校验）
+ * 显式声明 prerender = false，让 Vercel adapter 为该路由创建 SSR 函数入口，
+ * 否则在 hybrid 模式下 Astro 不会预渲染它、adapter 也不会接管它 → 404。
  */
+export const prerender = false;
+
 const params = new URLSearchParams(Astro.url.search);
 const redirect = params.get("redirect");
 const safeRedirect =
