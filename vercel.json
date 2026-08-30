@@ -5,5 +5,10 @@
 			"destination": "/zh/",
 			"permanent": true
 		}
+	],
+	"rewrites": [
+		{ "source": "/admin", "destination": "/_render" },
+		{ "source": "/admin/login", "destination": "/_render" },
+		{ "source": "/admin/(.*)", "destination": "/_render" }
 	]
 }
