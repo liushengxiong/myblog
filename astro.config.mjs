@@ -18,12 +18,7 @@ export default defineConfig({
 			noExternal: ["jose", "@octokit/rest", "gray-matter"],
 		},
 	},
-	i18n: {
-		defaultLocale: "zh",
-		locales: ["zh", "en"],
-		routing: {
-			prefixDefaultLocale: true,
-		},
-	},
+	// 双语通过手动目录结构实现( src/pages/zh/、src/pages/en/ + frontmatter 的 locale 字段 )。
+	// 不启用 Astro 内置 i18n 自动前缀，否则其中间件会对 /admin/* 等无语言前缀的页面返回 404。
 	site: "https://liushengxiong.com",
 });
