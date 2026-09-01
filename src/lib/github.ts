@@ -154,7 +154,11 @@ export function validateRepoPath(
 	const cleaned = segments.filter((s) => s.length > 0).join("/");
 
 	// 前缀白名单匹配（精确前缀字符串）
-	const matched = allowedPrefixes.find((p) => cleaned.startsWith(p));
+	// 注意：cleaned 已去掉首尾斜杠，需同时允许「目录前缀本身」
+	// （如 cleaned="src/content/post" 应能匹配前缀 "src/content/post/"）。
+	const matched = allowedPrefixes.find(
+		(p) => cleaned.startsWith(p) || `${cleaned}/`.startsWith(p),
+	);
 	if (!matched) {
 		throw new GitHubError(
 			"invalid_path",
