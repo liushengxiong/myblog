@@ -117,6 +117,8 @@ export const SITE_SETTINGS_SCHEMA = z.object({
 		siteDescription: bilingualString,
 		siteAuthor: bilingualString,
 		logoText: bilingualString.optional(),
+		/** Logo 图片路径（可选，设置后优先于文本 Logo 显示） */
+		logoImage: z.string().optional(),
 		favicon: z.string().default("/assets/images/favicon.png"),
 	}),
 	hero: z.object({

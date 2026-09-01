@@ -149,13 +149,18 @@ const username = session.username;
       <label class="block text-xs font-medium text-slate-700 dark:text-slate-200 mb-1.5">
         图片路径 <span class="text-slate-400 font-normal">（可留空）</span>
       </label>
-      <input
-        type="text"
-        name="image"
-        data-admin-project-image
-        placeholder="/assets/images/projects/xxx.png"
-        class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-mono outline-none focus:border-slate-400 dark:border-slate-700 dark:bg-slate-900"
-      />
+      <div class="flex gap-2">
+        <input
+          type="text"
+          name="image"
+          data-admin-project-image
+          placeholder="/assets/images/projects/xxx.png"
+          class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-mono outline-none focus:border-slate-400 dark:border-slate-700 dark:bg-slate-900"
+        />
+        <button type="button" data-admin-project-pick-image
+          class="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">选择图片</button>
+      </div>
+      <p class="mt-1 text-xs text-slate-400 dark:text-slate-500">建议 16:9 或 4:3，宽度 800px 以上。</p>
     </div>
 
     <!-- 标签 中/英 -->
@@ -329,5 +334,19 @@ const username = session.username;
       submitBtn.removeAttribute("disabled");
       statusText.textContent = "";
     }
+  });
+
+  // ====== 图片选择器 ======
+  form.querySelector<HTMLButtonElement>("[data-admin-project-pick-image]")?.addEventListener("click", async () => {
+    const { openImagePicker } = await import("../../../lib/image-picker");
+    openImagePicker({
+      title: "选择项目图片",
+      confirmText: "使用此图片",
+      onPick: (url) => {
+        imageInput.value = url;
+        imageInput.dispatchEvent(new Event("input", { bubbles: true }));
+        api.toast(`已填入图片：${url}`, "success");
+      },
+    });
   });
 </script>

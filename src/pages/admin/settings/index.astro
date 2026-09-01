@@ -134,6 +134,16 @@ try {
               class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-slate-400 dark:border-slate-700 dark:bg-slate-900" />
           </div>
           <div class="md:col-span-2">
+            <label class="block text-xs font-medium text-slate-700 dark:text-slate-200 mb-1.5">Logo 图片路径 <span class="text-slate-400 font-normal">（可选，设置后优先于文本 Logo）</span></label>
+            <div class="flex gap-2">
+              <input type="text" data-admin-settings-brand-logo-image maxlength="200" value={settings.brand.logoImage ?? ""} placeholder="/assets/images/logo.png"
+                class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-mono outline-none focus:border-slate-400 dark:border-slate-700 dark:bg-slate-900" />
+              <button type="button" data-admin-settings-pick-image="data-admin-settings-brand-logo-image"
+                class="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">选择图片</button>
+            </div>
+            <p class="mt-1 text-xs text-slate-400 dark:text-slate-500">建议透明背景 PNG，高度约 32–48px。</p>
+          </div>
+          <div class="md:col-span-2">
             <label class="block text-xs font-medium text-slate-700 dark:text-slate-200 mb-1.5">Favicon 路径</label>
             <div class="flex gap-2">
               <input type="text" data-admin-settings-brand-favicon maxlength="200" value={settings.brand.favicon}
@@ -141,6 +151,7 @@ try {
               <button type="button" data-admin-settings-pick-image="data-admin-settings-brand-favicon"
                 class="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">选择图片</button>
             </div>
+            <p class="mt-1 text-xs text-slate-400 dark:text-slate-500">建议 PNG/ICO，32×32 或 512×512。</p>
           </div>
         </div>
       </section>
@@ -186,6 +197,7 @@ try {
               <button type="button" data-admin-settings-pick-image="data-admin-settings-hero-portrait"
                 class="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">选择图片</button>
             </div>
+            <p class="mt-1 text-xs text-slate-400 dark:text-slate-500">建议 1:1，512×512。</p>
           </div>
           <div>
             <label class="block text-xs font-medium text-slate-700 dark:text-slate-200 mb-1.5">主按钮文案（中文）</label>
@@ -290,6 +302,7 @@ try {
               <button type="button" data-admin-settings-pick-image="data-admin-settings-seo-og"
                 class="shrink-0 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">选择图片</button>
             </div>
+            <p class="mt-1 text-xs text-slate-400 dark:text-slate-500">建议 1200×630（约 1.91:1）。</p>
           </div>
         </div>
       </section>
@@ -358,6 +371,7 @@ try {
         siteDescription: { zh: val("[data-admin-settings-brand-desc-zh]"), en: val("[data-admin-settings-brand-desc-en]") },
         siteAuthor: { zh: val("[data-admin-settings-brand-author-zh]"), en: val("[data-admin-settings-brand-author-en]") },
         logoText: { zh: val("[data-admin-settings-brand-logo-zh]"), en: val("[data-admin-settings-brand-logo-en]") },
+        logoImage: val("[data-admin-settings-brand-logo-image]"),
         favicon: val("[data-admin-settings-brand-favicon]"),
       };
       const hero = {

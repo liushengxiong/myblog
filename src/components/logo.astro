@@ -8,15 +8,22 @@ const siteName =
 	siteSettings?.brand?.logoText?.[lang] ||
 	siteSettings?.brand?.siteTitle?.[lang] ||
 	(lang === "en" ? "Leo Liu" : "刘盛雄");
+const logoImage = siteSettings?.brand?.logoImage;
 const homeUrl = `/${lang}/`;
 ---
 <a
   href={homeUrl}
   class="h-8 text-base group relative z-30 flex items-center space-x-1.5 text-black dark:text-white font-semibold whitespace-nowrap"
 >
-  <span
-    class="text-xl -translate-y-0.5 group-hover:-rotate-12 group-hover:scale-[1.2] ease-in-out duration-300"
-    >✦</span
-  >
-  <span class="-translate-y-0.5">{siteName}</span>
+  {logoImage ? (
+    <img src={logoImage} alt={siteName} class="h-8 w-auto object-contain" />
+  ) : (
+    <>
+      <span
+        class="text-xl -translate-y-0.5 group-hover:-rotate-12 group-hover:scale-[1.2] ease-in-out duration-300"
+        >✦</span
+      >
+      <span class="-translate-y-0.5">{siteName}</span>
+    </>
+  )}
 </a>

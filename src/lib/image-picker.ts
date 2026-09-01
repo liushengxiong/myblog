@@ -88,6 +88,7 @@ function ensureModal(): HTMLElement {
 				<div data-picker-pane="upload" class="space-y-4">
 					<div class="rounded-lg border border-dashed border-slate-300 p-6 dark:border-slate-700">
 						<p class="text-xs text-slate-500 dark:text-slate-400">支持 JPG / PNG / WebP / GIF，最大 5MB。服务端会重新生成文件名（不信任客户端）。</p>
+						<p class="mt-2 text-xs text-slate-400 dark:text-slate-500">尺寸建议：Logo 高约 32–48px（透明 PNG）、头像/封面 512×512 或以上、分享图 OG 1200×630。</p>
 						<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" data-picker-file
 							class="mt-3 block w-full text-xs text-slate-700 file:mr-3 file:rounded-md file:border-0 file:bg-slate-900 file:px-4 file:py-2 file:text-white hover:file:bg-slate-700 dark:text-slate-200 dark:file:bg-slate-100 dark:file:text-slate-900" />
 						<div class="mt-3 flex items-center gap-3">
