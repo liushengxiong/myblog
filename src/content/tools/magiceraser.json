@@ -1,0 +1,14 @@
+{
+  "id": "magiceraser",
+  "name": { "zh": "Magic Eraser", "en": "Magic Eraser" },
+  "description": {
+    "zh": "在线一键去除图片水印与多余物体，操作简单、出图干净，修图必备。",
+    "en": "Remove watermarks and unwanted objects from images online in one click — clean and easy."
+  },
+  "url": "https://magiceraser.org/",
+  "image": "",
+  "tags": { "zh": ["实用工具"], "en": ["Utilities"] },
+  "featured": false,
+  "visible": true,
+  "order": 9
+}

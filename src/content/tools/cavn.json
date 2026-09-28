@@ -1,0 +1,14 @@
+{
+  "id": "cavn",
+  "name": { "zh": "CavnAI（国际版）", "en": "CavnAI (International)" },
+  "description": {
+    "zh": "面向海外用户的 AI 音乐生成工具，支持 Google 账号一键登录，付费套餐可享 9 折优惠。",
+    "en": "AI music generator for global users. Sign in with Google and get 10% off any paid plan."
+  },
+  "url": "https://cavn.ai/?via=leo",
+  "image": "",
+  "tags": { "zh": ["音乐生成", "Google 登录", "9 折优惠"], "en": ["Music", "Google Sign-In", "10% Off"] },
+  "featured": true,
+  "visible": true,
+  "order": 2
+}

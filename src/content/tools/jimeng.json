@@ -1,0 +1,14 @@
+{
+  "id": "jimeng",
+  "name": { "zh": "即梦", "en": "Jimeng" },
+  "description": {
+    "zh": "字节跳动旗下 AI 生图与生视频工具，出图快、风格丰富，适合日常创意与短视频素材。",
+    "en": "ByteDance's AI image and video generator — fast renders and rich styles for daily creativity and short-video clips."
+  },
+  "url": "https://jimeng.jianying.com/",
+  "image": "",
+  "tags": { "zh": ["图像与视频生成"], "en": ["Image & Video Gen"] },
+  "featured": false,
+  "visible": true,
+  "order": 4
+}

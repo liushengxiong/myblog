@@ -1,0 +1,89 @@
+---
+import PageHeading from "../../../components/page-heading.astro";
+import { useTranslations } from "../../../i18n/ui.js";
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/main.astro";
+
+const lang = "zh";
+const t = useTranslations(lang);
+
+// 从 tools 内容集合读取，过滤 visible，按 order 排序
+const allTools = await getCollection("tools");
+const tools = allTools
+	.filter((p) => p.data.visible !== false)
+	.sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+
+// 按品类（tags 第一项）分组，并按组内最小 order 排序品类顺序
+const categoryMap = new Map<string, typeof tools>();
+for (const tool of tools) {
+	const cat = tool.data.tags?.[lang]?.[0] || "其他";
+	if (!categoryMap.has(cat)) categoryMap.set(cat, []);
+	categoryMap.get(cat)!.push(tool);
+}
+const groups = [...categoryMap.entries()].sort((a, b) => {
+	const minA = Math.min(...a[1].map((x) => x.data.order ?? 0));
+	const minB = Math.min(...b[1].map((x) => x.data.order ?? 0));
+	return minA - minB;
+});
+---
+
+<Layout title="AI 工具推荐" description="我日常使用、并真诚推荐的 AI 工具清单。">
+  <section class="relative z-20 max-w-3xl mx-auto my-12 px-7 lg:px-0">
+    <PageHeading
+      title="AI 工具推荐"
+      description="这是我日常使用、并真诚推荐的 AI 工具清单。按使用场景分类整理，点击即可前往——部分还包含我的专属邀请福利，码住更划算。"
+    />
+
+    <div class="flex flex-col gap-12 my-10">
+      {
+        groups.map(([category, items]) => (
+          <div>
+            <h3 class="flex items-center gap-2 mb-4 text-lg font-bold text-neutral-900 dark:text-neutral-100">
+              <span class="w-1.5 h-5 rounded-full bg-neutral-900 dark:bg-white" />
+              {category}
+              <span class="text-sm font-normal text-neutral-400">({items.length})</span>
+            </h3>
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {items.map((tool) => (
+                <div class="relative flex flex-col p-6 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors">
+                  {tool.data.featured && (
+                    <span class="absolute top-4 right-4 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-neutral-900 text-neutral-100 dark:bg-white dark:text-neutral-900">
+                      常用
+                    </span>
+                  )}
+                  <h4 class="pr-16 text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                    {tool.data.name?.[lang]}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                    {tool.data.description?.[lang]}
+                  </p>
+                  <div class="flex flex-wrap gap-2 mt-3">
+                    {(tool.data.tags?.[lang] ?? []).slice(1).map((tag) => (
+                      <span class="text-xs px-2 py-1 bg-neutral-50 dark:bg-neutral-900 rounded-md text-neutral-500 dark:text-neutral-500 border border-neutral-200 dark:border-neutral-700">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  {tool.data.url && (
+                    <a
+                      href={tool.data.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1 mt-4 w-fit px-4 py-2 text-xs font-semibold rounded-full border border-neutral-900 bg-neutral-900 text-neutral-100 dark:border-white dark:bg-white dark:text-neutral-900 hover:bg-white hover:text-neutral-900 dark:hover:bg-black dark:hover:text-white transition-colors"
+                    >
+                      前往使用 →
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="mt-4 text-xs text-neutral-400 leading-relaxed">
+      注：含邀请码 / 邀请链接的工具，使用我的渠道注册或开通会员，你我能同时获得平台额外奖励，感谢支持。
+    </p>
+  </section>
+</Layout>

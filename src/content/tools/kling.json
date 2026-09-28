@@ -1,0 +1,14 @@
+{
+  "id": "kling",
+  "name": { "zh": "可灵", "en": "Kling AI" },
+  "description": {
+    "zh": "高质量 AI 视频生成工具，运动物理一致性与人物稳定性表现出色，适合写实类视频。",
+    "en": "High-quality AI video generation with excellent motion physics and character stability — great for realistic clips."
+  },
+  "url": "https://klingai.com/",
+  "image": "",
+  "tags": { "zh": ["图像与视频生成"], "en": ["Image & Video Gen"] },
+  "featured": false,
+  "visible": true,
+  "order": 6
+}

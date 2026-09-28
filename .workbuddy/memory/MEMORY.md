@@ -16,5 +16,14 @@
 - 构建末尾的 safe-delete 守卫会拦截 Vercel adapter 的临时文件清理导致 `EXIT=1`，但静态预渲染（含所有文章 HTML）已成功完成，属环境限制，与内容无关。
 - 验证：检查 `.vercel/output/static/{zh,en}/post/<slug>/index.html` 的 `<title>` 与正文，以及 `{zh,en}/posts/index.html` 是否含新 slug。
 
+## AI 工具推荐页 (AI Tools page)
+- 首页"AI 工具推荐"资源卡片（id=`ai-tools`，`src/content/resources/ai-tools.json`）现在指向公开工具页，而非 `#`。
+- 工具数据：每个工具一个 JSON 写在 `src/content/tools/*.json`，schema 见 `src/content/config.js` 的 `toolsCollection`（字段：id/name{desc}/description{desc}/url/image/tags{desc 数组}/featured/visible/order）。`url` 可为 `""`。
+- 品类（category）由 `tags[lang][0]` 决定，工具页按品类分组、组内按 `order` 排序；卡片展示剩余 tags（去掉品类标签）。
+- 公开页面：`src/pages/zh/tools/index.astro` 与 `src/pages/en/tools/index.astro`，读取 `getCollection("tools")`，过滤 `visible!==false`。
+- 导航栏：`src/i18n/navigation.js` 已加 "AI 工具"/"AI Tools" 入口（位于 项目/Projects 之后）。
+- 首页资源卡片链接在 `src/pages/{zh,en}/index.astro` 的 resources 循环里对 `ai-tools` 做了 lang 感知覆盖（`/${lang}/tools/`）。
+- 注意：`tools` 内容集合的 config schema 不含 `id` 字段（id 取自文件名）；但后台 `src/lib/schemas.ts` 的 `TOOL_SCHEMA` 要求 `id`，手写 JSON 时一并带上以保持后台兼容。
+
 ## 部署
-- 通过 Vercel（`vercel.json` 存在）从 Git 自动构建；新增 .md 后需 commit & push 触发部署（不要擅自 push）。
+- 通过 Vercel（`vercel.json` 存在）从 Git 自动构建；新增文件后需 commit & push 触发部署（不要擅自 push）。

@@ -1,0 +1,14 @@
+{
+  "id": "paiwo",
+  "name": { "zh": "拍我 AI", "en": "Paiwo AI" },
+  "description": {
+    "zh": "AI 视频生成与智能剪辑工具，支持多种创意玩法。通过邀请链接注册，双方都有额外奖励。",
+    "en": "AI video generation and smart editing with plenty of creative modes. Sign up via the referral link for bonus credits for both sides."
+  },
+  "url": "https://share.pai.video/referral/FK7TA3KC",
+  "image": "",
+  "tags": { "zh": ["图像与视频生成", "邀请 FK7TA3KC"], "en": ["Image & Video Gen", "referral FK7TA3KC"] },
+  "featured": false,
+  "visible": true,
+  "order": 7
+}

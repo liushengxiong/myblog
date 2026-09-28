@@ -1,0 +1,14 @@
+{
+  "id": "minimax",
+  "name": { "zh": "MiniMax 语音", "en": "MiniMax TTS" },
+  "description": {
+    "zh": "高质量 AI 旁白配音，文本一键转为自然语音，多种音色可选，是视频配音的常用利器。",
+    "en": "High-quality AI narration. Turn text into natural speech with multiple voices — a go-to for video voiceovers."
+  },
+  "url": "https://www.minimaxi.com/audio/text-to-speech",
+  "image": "",
+  "tags": { "zh": ["配音"], "en": ["Voiceover"] },
+  "featured": false,
+  "visible": true,
+  "order": 8
+}

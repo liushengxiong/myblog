@@ -1,0 +1,14 @@
+{
+  "id": "yourmusic",
+  "name": { "zh": "YourMusic（国内版）", "en": "YourMusic (China)" },
+  "description": {
+    "zh": "国内版 AI 音乐生成平台，输入灵感即可生成完整歌曲。注册时填写邀请码可立享专属福利。",
+    "en": "China-version AI music generator that turns your ideas into full songs. Enter the invite code at signup for exclusive perks."
+  },
+  "url": "https://app.yourmusic.fun/?inviteCode=GQPPUQINBI",
+  "image": "",
+  "tags": { "zh": ["音乐生成", "邀请码 GQPPUQINBI"], "en": ["Music", "invite GQPPUQINBI"] },
+  "featured": true,
+  "visible": true,
+  "order": 1
+}

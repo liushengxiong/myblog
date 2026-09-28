@@ -1,0 +1,14 @@
+{
+  "id": "wink",
+  "name": { "zh": "Wink 去水印", "en": "Wink Watermark Remover" },
+  "description": {
+    "zh": "专注视频去水印的在线工具，上传视频即可智能清除残留水印，适合二次剪辑。",
+    "en": "Online video watermark remover. Upload a clip and let it intelligently clear leftover watermarks for re-editing."
+  },
+  "url": "https://wink.cn/video-watermark-remover/upload",
+  "image": "",
+  "tags": { "zh": ["实用工具"], "en": ["Utilities"] },
+  "featured": false,
+  "visible": true,
+  "order": 10
+}
