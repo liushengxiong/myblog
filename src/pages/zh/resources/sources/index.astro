@@ -1,0 +1,545 @@
+---
+import Layout from "../../../../layouts/main.astro";
+import PageHeading from "../../../../components/page-heading.astro";
+
+// 信息源数据：按「战略 → 执行」重排，YouTube 创作者放到最后。
+// 每个 section：icon / title / badge / intro / items[]
+// 每个 item：name / focus / core(是否核心锚点) / links[{label, href}]
+const sections = [
+  {
+    icon: "🧭",
+    title: "一、商业与趋势认知",
+    badge: "战略 · 管方向",
+    intro:
+      "想看懂趋势和底层判断，看这些；但别把访谈当投资顾问，少看喊单。这部分决定你「往哪走」。",
+    items: [
+      {
+        name: "Y Combinator 官方",
+        focus:
+          "AI 创业路演、创始人分享、早期投资逻辑，最贴「做产品」。建议当大学：Startup School、YC Podcast、创业文库。",
+        links: [
+          { label: "官网", href: "https://www.ycombinator.com/" },
+          { label: "Startup School", href: "https://www.startupschool.org/" },
+          { label: "文库", href: "https://www.ycombinator.com/library" },
+        ],
+      },
+      {
+        name: "Greg Isenberg",
+        focus: "AI SaaS、用 AI 重做传统业务、社区产品化，偏商业化落地。",
+        links: [
+          { label: "X", href: "https://x.com/gregisenberg" },
+          { label: "YouTube", href: "https://www.youtube.com/@gregisenberg" },
+        ],
+      },
+      {
+        name: "Lex Fridman",
+        focus: "长访谈，嘉宾含 Karpathy、LeCun、Ilya、Altman 等，建立行业顶层框架，不急用但长线有用。",
+        links: [
+          { label: "官网", href: "https://lexfridman.com/" },
+          { label: "YouTube", href: "https://www.youtube.com/@lexfridman" },
+        ],
+      },
+      {
+        name: "Dwarkesh Patel",
+        focus: "深度长访谈，对 AI、生物、宏观的拆解非常扎实，适合建立认知深度。",
+        links: [
+          { label: "官网", href: "https://www.dwarkeshpatel.com/" },
+          { label: "YouTube", href: "https://www.youtube.com/@DwarkeshPatel" },
+        ],
+      },
+      {
+        name: "Reid Hoffman",
+        focus: "LinkedIn 创始人，讲网络效应、职业资本、长期创业；比纯炒概念稳，适合重新设计「个人品牌 + 人脉」。",
+        links: [
+          { label: "官网", href: "https://www.reidhoffman.org/" },
+          { label: "LinkedIn", href: "https://www.linkedin.com/in/reidhoffman" },
+        ],
+      },
+      {
+        name: "Stratechery（Ben Thompson）",
+        focus: "最推荐的商业分析：为什么苹果/OpenAI/Meta/Google 这样做？不是新闻，而是底层逻辑。",
+        links: [
+          { label: "官网", href: "https://stratechery.com/" },
+          { label: "文章全集", href: "https://stratechery.com/articles/" },
+        ],
+      },
+      {
+        name: "Lenny's Newsletter",
+        focus: "产品经理几乎都知道：增长 · 用户 · 产品 · AI · 创业，很多文章质量极高。",
+        links: [
+          { label: "官网", href: "https://www.lennysnewsletter.com/" },
+          { label: "归档", href: "https://www.lennysnewsletter.com/archive" },
+        ],
+      },
+      {
+        name: "a16z（Andreessen Horowitz）",
+        focus: "硅谷顶级 VC，关注 AI · Agent · 创业 · 未来趋势。",
+        links: [
+          { label: "官网", href: "https://a16z.com/" },
+          { label: "文章", href: "https://a16z.com/articles/" },
+          { label: "播客", href: "https://a16z.com/podcasts/" },
+        ],
+      },
+      {
+        name: "First Round Review",
+        focus: "全是创业经验，很多是「踩过坑之后总结出来的」。",
+        links: [{ label: "官网", href: "https://review.firstround.com/" }],
+      },
+    ],
+  },
+  {
+    icon: "🛡️",
+    title: "二、稳健财商与风险控制",
+    badge: "战略 · 别亏钱",
+    intro:
+      "38 岁没上班，最怕把「拼一把」做成「梭哈」。先看安全垫，再谈收益。这部分决定你「别翻车」。",
+    items: [
+      {
+        name: "Jeremy Schneider（Personal Finance Club）",
+        focus: "指数基金、低支出、早投资、财务独立；不卖课不推个股，适合做安全垫。",
+        links: [{ label: "官网", href: "https://www.personalfinanceclub.com/" }],
+      },
+      {
+        name: "Steven Bartlett（The Diary of a CEO）",
+        focus: "创业心理、个人品牌、延迟满足，补「认知与自律」；但别把他当投资顾问。",
+        links: [{ label: "YouTube", href: "https://www.youtube.com/@TheDiaryOfACEO" }],
+      },
+      {
+        name: "伯克希尔股东信（Buffett）",
+        focus: "价值投资的圣经，也是商业智慧宝库。语言幽默、案例丰富，值得逐句精读。",
+        links: [
+          { label: "股东信全集", href: "https://www.berkshirehathaway.com/letters/letters.html" },
+          { label: "2024 年信", href: "https://www.berkshirehathaway.com/letters/2024ltr.pdf" },
+        ],
+      },
+      {
+        name: "Oaktree Memo（Howard Marks）",
+        focus: "周期、风险、市场情绪。《投资最重要的事》作者的原始思考，连巴菲特都说「第一时间必读」。",
+        links: [{ label: "备忘录全集", href: "https://www.oaktreecapital.com/insights/memo" }],
+      },
+      {
+        name: "Bridgewater（Ray Dalio）",
+        focus: "《原则》与日常观察，关注经济机器运行规律、债务周期、全球宏观。",
+        links: [
+          { label: "官网", href: "https://www.bridgewater.com/" },
+          { label: "研究洞察", href: "https://www.bridgewater.com/research-and-insights" },
+        ],
+      },
+      {
+        name: "Morgan Housel",
+        focus: "《金钱心理学》作者，关注财富心理 · 长期主义 · 行为金融，常读常新。",
+        links: [{ label: "官网 / 博客", href: "https://morganhousel.com/" }],
+      },
+      {
+        name: "Aswath Damodaran",
+        focus: "估值大师、NYU 教授，企业估值方法 · 市场风险溢价 · 数据，课程与论文全部免费公开。",
+        links: [
+          { label: "个人主页", href: "https://pages.stern.nyu.edu/~adamodar/" },
+          { label: "估值课程", href: "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/eqlecture.html" },
+          { label: "估值数据", href: "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/data.html" },
+        ],
+      },
+    ],
+  },
+  {
+    icon: "⚙️",
+    title: "三、AI 工具与工作效率",
+    badge: "执行 · 直接变现",
+    intro:
+      "先让自己「用得起来」：零到中级，不一定要写代码，先把日常调研、写作、办公、自动化跑通。这部分直接省时间、能接活。",
+    items: [
+      {
+        name: "Matt Wolfe",
+        focus: "AI 新工具 / 新模型周报型，相当于信息雷达，省得你自己刷各种发布。",
+        core: true,
+        links: [
+          { label: "YouTube", href: "https://www.youtube.com/@MattWolfe" },
+          { label: "FutureTools", href: "https://www.futuretools.io/" },
+        ],
+      },
+      {
+        name: "Futurepedia",
+        focus: "AI 工具地图：做图 / 视频 / 办公 / 客服 / 营销哪类工具有什么替代品，用它建立自己的工具箱。",
+        links: [{ label: "官网", href: "https://www.futurepedia.io/" }],
+      },
+      {
+        name: "The AI Advantage",
+        focus: "提示词、ChatGPT、RAG、办公自动化 SOP，偏「马上能用」。",
+        core: true,
+        links: [{ label: "YouTube", href: "https://www.youtube.com/@TheAIAdvantage" }],
+      },
+      {
+        name: "Kevin Stratvert",
+        focus: "Excel、PPT、会议总结、Copilot / Claude / ChatGPT 办公场景，特别适合把过去职场经验转成资料库、方案库。",
+        links: [{ label: "YouTube", href: "https://www.youtube.com/@KevinStratvert" }],
+      },
+      {
+        name: "Jeff Su",
+        focus: "个人工作流、邮件、笔记、任务管理，适合把 10 年经验沉淀成知识系统。",
+        links: [{ label: "YouTube", href: "https://www.youtube.com/@JeffSu" }],
+      },
+      {
+        name: "All About AI / Nicholas Renotte",
+        focus: "再往下学自动化、API、Agent、Python 项目；想自己搭产品再进这一层。",
+        links: [
+          { label: "All About AI", href: "https://www.youtube.com/@allaboutai" },
+          { label: "Nicholas Renotte", href: "https://www.youtube.com/@NicholasRenotte" },
+        ],
+      },
+      {
+        name: "想学底层而非只用工具",
+        focus: "Karpathy（LLM 原理、从零写 GPT）、DeepLearning.AI / 吴恩达（系统入门）、Hugging Face 官方（开源模型、RAG、Agent）、Yannic Kilcher / Two Minute Papers（论文跟踪）。",
+        links: [
+          { label: "Karpathy", href: "https://www.youtube.com/@AndrejKarpathy" },
+          { label: "DeepLearning.AI", href: "https://www.deeplearning.ai/" },
+          { label: "Hugging Face", href: "https://huggingface.co/" },
+          { label: "Two Minute Papers", href: "https://www.youtube.com/@TwoMinutePapers" },
+        ],
+      },
+      {
+        name: "OpenAI 官方博客",
+        focus: "GPT 系列、API 更新、安全研究、产品发布的第一手信息。",
+        links: [
+          { label: "官方博客", href: "https://openai.com/blog" },
+          { label: "研究论文", href: "https://openai.com/research" },
+        ],
+      },
+      {
+        name: "Anthropic 官方博客",
+        focus: "Claude 系列开发者，关注模型安全 · 能力更新 · API 变化。",
+        links: [
+          { label: "官网", href: "https://www.anthropic.com/" },
+          { label: "新闻博客", href: "https://www.anthropic.com/news" },
+          { label: "研究", href: "https://www.anthropic.com/research" },
+        ],
+      },
+      {
+        name: "Google DeepMind",
+        focus: "Gemini 系列、AlphaFold、机器人研究，论文质量极高。",
+        links: [
+          { label: "官网", href: "https://deepmind.google/" },
+          { label: "博客", href: "https://deepmind.google/discover/blog/" },
+        ],
+      },
+      {
+        name: "Microsoft AI / NVIDIA 博客",
+        focus: "Copilot、Azure AI 企业级应用一手信息；NVIDIA 看 GPU / CUDA / 推理优化与算力底座。",
+        links: [
+          { label: "Microsoft AI", href: "https://blogs.microsoft.com/ai/" },
+          { label: "NVIDIA 博客", href: "https://blogs.nvidia.com/" },
+        ],
+      },
+    ],
+  },
+  {
+    icon: "🚀",
+    title: "四、一人公司 / 独立开发",
+    badge: "执行 · 直接变现",
+    intro:
+      "最贴「不在职、要拼市场」。核心价值不是技术多牛，而是用 AI 把小需求做成付费产品，单人跑营收。学他们怎么选细分、做 MVP、定价、用 SEO / X 引流、用 AI 交付。",
+    items: [
+      {
+        name: "Pieter Levels（@levelsio）",
+        focus: "Nomad List、RemoteOK、PhotoAI、InteriorAI，零员工、公开营收、快速发产品。公开资料称组合年营收 300 万+ 美元，PhotoAI 月入约 10 万+ 美元；是「一个人 + AI + SEO」的标杆。",
+        core: true,
+        links: [
+          { label: "个人站", href: "https://levels.io/" },
+          { label: "X", href: "https://x.com/levelsio" },
+        ],
+      },
+      {
+        name: "Marc Lou",
+        focus: "ShipFast（SaaS 启动模板）、CodeFast，主张快速发布验证、不追求完美；ShipFast 公开月收约 5 万+ 美元。",
+        core: true,
+        links: [
+          { label: "个人站", href: "https://marclou.be/" },
+          { label: "ShipFast", href: "https://shipfast.dev/" },
+        ],
+      },
+      {
+        name: "Tony Dinh",
+        focus: "TypingMind（多模型前端）、BlackMagic、Xnapper，多个小工具组合，适合学「做窄工具」。",
+        links: [
+          { label: "个人站", href: "https://tonydinh.com/" },
+          { label: "TypingMind", href: "https://www.typingmind.com/" },
+        ],
+      },
+      {
+        name: "Danny Postma",
+        focus: "HeadshotPro、ProfilePicture.AI，垂直 AI 图像，HeadshotPro 做到数百万 ARR，思路是「单个高频小痛点」。",
+        links: [
+          { label: "个人站", href: "https://dannypostma.com/" },
+          { label: "HeadshotPro", href: "https://www.headshotpro.com/" },
+        ],
+      },
+      {
+        name: "Arvid Kahl",
+        focus: "Podscan、写过《Zero to Sold》《The Embedded Entrepreneur》，更偏方法论、可持续小公司，适合没技术背景学定位。",
+        links: [
+          { label: "个人站", href: "https://www.arvidkahl.com/" },
+          { label: "Podscan", href: "https://podscan.fm/" },
+        ],
+      },
+      {
+        name: "Maor Shlomo / Base44",
+        focus: "自然语言搭应用，6 个月被 Wix 收购案例；学「AI 降低开发门槛」，但不必照搬退出神话。",
+        links: [
+          { label: "Base44", href: "https://www.base44.com/" },
+          { label: "X", href: "https://x.com/MaorShlomo" },
+        ],
+      },
+      {
+        name: "Indie Hackers",
+        focus: "如果只能推荐一个就是它：每天都有人做小工具三个月赚 5000 美元的真实复盘。为什么、怎么做、用了什么技术。",
+        core: true,
+        links: [
+          { label: "官网", href: "https://www.indiehackers.com/" },
+          { label: "播客", href: "https://www.indiehackers.com/podcasts" },
+        ],
+      },
+      {
+        name: "Hacker News",
+        focus: "AI、创业、YC、OpenAI、Claude、Cursor 几乎第一时间都在这里讨论。",
+        links: [{ label: "官网", href: "https://news.ycombinator.com/" }],
+      },
+      {
+        name: "Product Hunt",
+        focus: "每天看今天大家发布了什么产品，你会发现很多产品其实很简单但体验很好。",
+        links: [{ label: "官网", href: "https://www.producthunt.com/" }],
+      },
+      {
+        name: "GitHub Trending",
+        focus: "看最近哪些开源项目爆了，很多 AI 产品先在这里火起来。",
+        links: [
+          { label: "Trending", href: "https://github.com/trending" },
+          { label: "今日", href: "https://github.com/trending?since=daily" },
+        ],
+      },
+      {
+        name: "Paul Graham 文集",
+        focus: "YC 创始人、硅谷创业教父，文章值得反复精读：《How to Do Great Work》《Do Things That Don't Scale》《Maker's Schedule》。",
+        links: [
+          { label: "文章全集", href: "https://paulgraham.com/articles.html" },
+          { label: "How to Do Great Work", href: "http://paulgraham.com/great.html" },
+        ],
+      },
+    ],
+  },
+  {
+    icon: "📺",
+    title: "五、YouTube 创作者 / 内容流量",
+    badge: "放到最后 · 放大环节",
+    intro:
+      "当你已经有一款产品 / 服务，再用内容放大。放最后是因为——先有可卖的东西，流量才有意义。这部分研究平台、创作者和案例。",
+    items: [
+      {
+        name: "YouTube 官方博客 / Creator Insider",
+        focus: "官方算法、Shorts 新功能、广告分成、AI 工具更新；比自媒体转述快几天。Creator Insider 由 YouTube 员工运营，直接解释推荐/点击率为何下降。",
+        links: [
+          { label: "官方博客", href: "https://blog.youtube/" },
+          { label: "创作者频道", href: "https://www.youtube.com/@youtubecreators" },
+        ],
+      },
+      {
+        name: "Colin and Samir",
+        focus: "全球第一梯队 Creator Economy 节目，采访过 MrBeast、Ali Abdaal、MKBHD、YouTube CEO。讨论创作者商业模式，不是教剪视频。",
+        links: [
+          { label: "YouTube", href: "https://www.youtube.com/@ColinandSamir" },
+          { label: "官网", href: "https://colinandsamir.com/" },
+        ],
+      },
+      {
+        name: "Think Media",
+        focus: "偏运营实战：标题 · 缩略图 · SEO · 增长策略，非常适合实战。",
+        links: [{ label: "YouTube", href: "https://www.youtube.com/@thinkmedia" }],
+      },
+    ],
+  },
+  {
+    icon: "🗞️",
+    title: "延伸：一手深度信息源（五层信息饮食）",
+    badge: "建立真正判断力",
+    intro:
+      "公众号只是「发现话题」的入口，形成观点靠英文原文与一手数据。下面这些大部分免费，质量极高，按频率取用即可。",
+    items: [
+      {
+        name: "The Economist",
+        focus: "讲全球政治、AI、国际关系、商业、科技，并告诉你「为什么发生」。几乎所有国际投资人都会看。",
+        links: [
+          { label: "官网", href: "https://www.economist.com/" },
+          { label: "周刊", href: "https://www.economist.com/weeklyedition" },
+        ],
+      },
+      {
+        name: "Financial Times",
+        focus: "经济学人是周报，FT 是每天发生什么：全球资本市场 · 并购 · AI 公司 · VC · 美联储。",
+        links: [
+          { label: "官网", href: "https://www.ft.com/" },
+          { label: "科技版", href: "https://www.ft.com/technology" },
+          { label: "市场版", href: "https://www.ft.com/markets" },
+        ],
+      },
+      {
+        name: "Bloomberg / Reuters",
+        focus: "Bloomberg 更偏金融分析；Reuters 几乎只有事实、没有观点，很多财经媒体都是转载它。",
+        links: [
+          { label: "Bloomberg", href: "https://www.bloomberg.com/" },
+          { label: "Reuters", href: "https://www.reuters.com/" },
+        ],
+      },
+      {
+        name: "Foreign Affairs / HBR",
+        focus: "Foreign Affairs 讲国际战略与外交（偏战略非新闻）；HBR 是商业管理思想的源头。",
+        links: [
+          { label: "Foreign Affairs", href: "https://www.foreignaffairs.com/" },
+          { label: "HBR", href: "https://hbr.org/" },
+        ],
+      },
+      {
+        name: "IMF / World Bank / OECD",
+        focus: "全球经济、债务、人口、发展数据，权威免费，年度《世界发展报告》《F&D》必读。",
+        links: [
+          { label: "IMF F&D", href: "https://www.imf.org/en/Publications/fandd" },
+          { label: "World Bank", href: "https://www.worldbank.org/en/research" },
+          { label: "OECD", href: "https://www.oecd.org/" },
+        ],
+      },
+      {
+        name: "McKinsey / Bain / BCG / Deloitte·PwC·Accenture",
+        focus: "顶级咨询免费研究报告，AI、数字化转型、行业趋势分析深度无出其右。",
+        links: [
+          { label: "McKinsey", href: "https://www.mckinsey.com/featured-insights" },
+          { label: "Bain", href: "https://www.bain.com/insights/" },
+          { label: "BCG", href: "https://www.bcg.com/publications" },
+        ],
+      },
+      {
+        name: "NVIDIA Research",
+        focus: "除博客外，专攻 AI 前沿研究：生成式 AI、机器人、自动驾驶、科学计算。",
+        links: [
+          { label: "研究主页", href: "https://research.nvidia.com/" },
+          { label: "论文", href: "https://research.nvidia.com/publications" },
+        ],
+      },
+    ],
+  },
+];
+---
+
+<Layout
+  title="信息源导航"
+  description="围绕「AI 时代的一人公司」旅程精选的信息源导航：从战略认知、稳健财商，到 AI 工具实操、一人公司 / 独立开发，最后用内容放大。"
+>
+  <section class="relative z-20 max-w-3xl mx-auto my-12 px-7 lg:px-0">
+    <PageHeading
+      title="AI 时代的信息源导航"
+      description="围绕「一人公司 / AI Solopreneur」的旅程——先想清楚方向、守住本金，再动手把经验变成能卖的产品，最后用内容放大。下面按「战略 → 执行」重排，YouTube 创作者放在最后。"
+    />
+
+    <!-- 使用原则 -->
+    <div class="mt-8 p-5 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900">
+      <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+        <span class="font-semibold text-neutral-900 dark:text-neutral-100">怎么用：</span>
+        国外可学的人很多，但别像追国内「暴富叙事」一样全跟。把目标拆成
+        <b>前面两组直接能变现（AI 工具、一人公司）</b>、
+        <b>后面两组管方向和别亏钱（商业认知、稳健财商）</b>。
+        信息源固定 <b>3 个</b> 就够：Matt Wolfe（动态）+ The AI Advantage / Jeff Su（工作流）+ Levels 或 Marc Lou（一人公司案例）。别关注 30 个，越关注越焦虑。
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-14 my-12">
+      {
+        sections.map((section) => (
+          <div>
+            <div class="flex items-end justify-between mb-1">
+              <h3 class="flex items-center gap-2 text-xl font-bold text-neutral-900 dark:text-neutral-100">
+                <span class="text-2xl leading-none">{section.icon}</span>
+                {section.title}
+              </h3>
+              <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-neutral-900 text-neutral-100 dark:bg-white dark:text-neutral-900 whitespace-nowrap">
+                {section.badge}
+              </span>
+            </div>
+            {section.intro && (
+              <p class="mb-5 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
+                {section.intro}
+              </p>
+            )}
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              {section.items.map((item) => (
+                <div class="relative flex flex-col p-6 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors">
+                  {item.core && (
+                    <span class="absolute top-4 right-4 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-neutral-900 text-neutral-100 dark:bg-white dark:text-neutral-900">
+                      核心
+                    </span>
+                  )}
+                  <h4 class="pr-14 text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                    {item.name}
+                  </h4>
+                  <p class="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                    {item.focus}
+                  </p>
+                  <div class="flex flex-wrap gap-2 mt-4">
+                    {item.links.map((link) => (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full border border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-neutral-900 hover:text-neutral-900 dark:hover:border-white dark:hover:text-white transition-colors"
+                      >
+                        {link.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- 加密 / Web3 提醒 -->
+    <div class="p-5 border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-700">
+      <p class="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+        <span class="font-semibold text-neutral-900 dark:text-neutral-100">关于加密 / Web3：</span>
+        若真感兴趣，只把它当「资产小比例 + 学底层」，别跟孙宇晨式人物学喊单；先看项目代码、用户、收入、合规，再决定是不是碰。
+      </p>
+    </div>
+
+    <!-- 行动路线 -->
+    <div class="mt-10">
+      <h3 class="flex items-center gap-2 mb-5 text-xl font-bold text-neutral-900 dark:text-neutral-100">
+        <span class="w-1.5 h-5 rounded-full bg-neutral-900 dark:bg-white" />
+        行动路线（比「关注谁」更重要）
+      </h3>
+      <ol class="flex flex-col gap-4">
+        <li class="flex gap-4">
+          <span class="flex-none w-8 h-8 rounded-full bg-neutral-900 text-neutral-100 dark:bg-white dark:text-neutral-900 text-sm font-bold flex items-center justify-center">1</span>
+          <div>
+            <p class="font-semibold text-neutral-900 dark:text-neutral-100">把 10 年经验列成「可售卖问题」</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">运营 / 销售 / 供应链 / HR / 工程 / 教育，都能拆成「行业模板 + 诊断 + AI 代做」。先选 1 个垂直。</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span class="flex-none w-8 h-8 rounded-full bg-neutral-900 text-neutral-100 dark:bg-white dark:text-neutral-900 text-sm font-bold flex items-center justify-center">2</span>
+          <div>
+            <p class="font-semibold text-neutral-900 dark:text-neutral-100">90 天小闭环</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">第 1 个月：用 AI 搭个人知识库 + 内容账号，每天发一个行业痛点解法；第 2 个月：做一个付费小工具 / 小服务（报价表生成、合同检查、简历优化、投放报告、培训脚本等）；第 3 个月：跑 10 个付费客户，不管多少先验证，再决定做 SaaS 还是咨询。</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span class="flex-none w-8 h-8 rounded-full bg-neutral-900 text-neutral-100 dark:bg-white dark:text-neutral-900 text-sm font-bold flex items-center justify-center">3</span>
+          <div>
+            <p class="font-semibold text-neutral-900 dark:text-neutral-100">安全垫</p>
+            <p class="text-sm text-neutral-600 dark:text-neutral-400 mt-1">没收入期间用指数基金 / 现金管理代替「高波动投机」；AI 产品收入没稳定前，不 All in 炒币、不借钱创业。</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <p class="mt-10 text-xs text-neutral-400 leading-relaxed">
+      本导航持续更新 · 链接均为各信息源官方主页 / 频道，建议自行判断订阅与付费项。
+    </p>
+  </section>
+</Layout>

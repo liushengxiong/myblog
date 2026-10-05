@@ -1,0 +1,14 @@
+{
+  "id": "info-sources",
+  "title": {
+    "zh": "信息源导航",
+    "en": "Info Sources"
+  },
+  "description": {
+    "zh": "AI 时代一人公司的精选信息源：从战略到执行",
+    "en": "Curated info sources for the AI-era solopreneur: from strategy to execution"
+  },
+  "link": "/zh/resources/sources/",
+  "visible": true,
+  "order": 2
+}

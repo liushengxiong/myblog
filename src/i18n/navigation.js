@@ -4,6 +4,7 @@ export const navigation = {
 		{ name: "文章", url: "/zh/posts/" },
 		{ name: "项目", url: "/zh/projects/" },
 		{ name: "AI 工具", url: "/zh/tools/" },
+		{ name: "信息源", url: "/zh/resources/sources/" },
 		{ name: "关于", url: "/zh/about/" },
 	],
 	en: [
@@ -11,6 +12,7 @@ export const navigation = {
 		{ name: "Posts", url: "/en/posts/" },
 		{ name: "Projects", url: "/en/projects/" },
 		{ name: "AI Tools", url: "/en/tools/" },
+		{ name: "Info Sources", url: "/zh/resources/sources/" },
 		{ name: "About", url: "/en/about/" },
 	],
 };

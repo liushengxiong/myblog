@@ -25,5 +25,12 @@
 - 首页资源卡片链接在 `src/pages/{zh,en}/index.astro` 的 resources 循环里对 `ai-tools` 做了 lang 感知覆盖（`/${lang}/tools/`）。
 - 注意：`tools` 内容集合的 config schema 不含 `id` 字段（id 取自文件名）；但后台 `src/lib/schemas.ts` 的 `TOOL_SCHEMA` 要求 `id`，手写 JSON 时一并带上以保持后台兼容。
 
+## 推荐资源卡片 (resources collection)
+- 首页"推荐资源"区由 `src/content/resources/*.json` 驱动（`resourcesCollection` schema：id/title{desc}/description{desc}/link/visible/order），在 `src/pages/{zh,en}/index.astro` 的 resources 循环渲染，按 order 排序、取前 3、过滤 visible。
+- 特殊：`ai-tools` 卡片在首页循环里被硬编码覆盖为 `/${lang}/tools/`；其余卡片直接用 `entry.data.link`。
+- 现有卡片：ai-tools（→/zh/tools/）、info-sources（→/zh/resources/sources/，原"个人成长书单"已删除）、content-creation-resources（link 仍为 #）。
+- 信息源导航页：`src/pages/zh/resources/sources/index.astro`，按「战略→执行」重排（商业认知→稳健财商→AI工具→一人公司/独立开发→YouTube创作者最后），整合了用户新增的 4 组 AI 推荐源；设计沿用站点 Tailwind/Layout/PageHeading 风格，纯中文页。
+- 导航栏 `src/i18n/navigation.js` 已加 "信息源"/"Info Sources" 入口（位于 AI 工具之后），均指向 /zh/resources/sources/。
+
 ## 部署
 - 通过 Vercel（`vercel.json` 存在）从 Git 自动构建；新增文件后需 commit & push 触发部署（不要擅自 push）。
