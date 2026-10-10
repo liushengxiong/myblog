@@ -1,0 +1,14 @@
+{
+  "id": "workbuddy",
+  "name": { "zh": "WorkBuddy", "en": "WorkBuddy" },
+  "description": {
+    "zh": "集 AI 对话、写作、制表、画图与自动化于一体的桌面智能工作台，能读写本地文件、运行命令、连接 MCP，把重复性的工作一站式搞定。",
+    "en": "An all-in-one desktop AI workbench for chat, writing, spreadsheets, images, and automation — it reads local files, runs commands, and connects MCPs so you can handle repetitive work in one place."
+  },
+  "url": "https://www.workbuddy.cn/events/invite?inviteCode=x9wpd9cnffn1krm",
+  "image": "",
+  "tags": { "zh": ["实用工具", "邀请码 x9wpd9cnffn1krm"], "en": ["Utilities", "invite x9wpd9cnffn1krm"] },
+  "featured": true,
+  "visible": true,
+  "order": 11
+}
