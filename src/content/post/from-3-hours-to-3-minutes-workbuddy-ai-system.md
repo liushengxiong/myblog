@@ -23,7 +23,11 @@ Obsidian 是我的知识库。里面存着我过去写的 100 多篇文章，它
 
 WorkBuddy 是真正出活的地方。我在 WorkBuddy 上打开 Agent，把想要写的内容简单几句话写给它，比如早上，我把每天写的日记里"收获"那一部分，直接复制过去。就这一句输入，剩下的交给它。
 
+![把日记内容交给 WorkBuddy Agent](/images/posts/from-3-hours-to-3-minutes-workbuddy-ai-system/01.png)
+
 等了大概 3 分钟，一篇公众号文章就写好了。
+
+![3 分钟生成一篇公众号文章](/images/posts/from-3-hours-to-3-minutes-workbuddy-ai-system/02.png)
 
 注意，这 3 分钟里我不是干坐着。我去倒杯水、回个消息，回来文章就在那儿了。以前我从空白文档开始憋一篇，光是"今天写什么、怎么开头"就能耗掉半小时。
 
@@ -38,6 +42,8 @@ WorkBuddy 是真正出活的地方。我在 WorkBuddy 上打开 Agent，把想�
 第二，做事实核查。普通的新媒体文章一般不需要，但凡是跟金融、新闻相关的，我会让 AI 再逐条核对里面的数据和说法，确认没编、没混、没张冠李戴，再往下走。
 
 改完之后，我会把这篇文章发给 WorkBuddy，这篇文章会在系统里存档。更重要的是，AI 会学习我修改的地方——我删了什么、换了什么词、为什么改，下一次再写的时候，它就更接近我一点。
+
+![把修改后的文章回传给 WorkBuddy 学习](/images/posts/from-3-hours-to-3-minutes-workbuddy-ai-system/03.png)
 
 这套"生成 → 我改 → 它学"的循环，是我觉得这套系统真正值钱的地方。它不是一次性的代写，而是越用越像我的协作者。
 
@@ -68,3 +74,5 @@ WorkBuddy 是真正出活的地方。我在 WorkBuddy 上打开 Agent，把想�
 对了，我最近建了一个 AI 新媒体搭子群，里面都是一起做 AI 新媒体的小伙伴，遇到问题会一起讨论解决，现在已经有 20 人了，如果你感兴趣，也可以加我加入，详细介绍可以看这篇文章：
 
 [我决定建一个 AI 新媒体搭子群，第一期只收 5 元](https://mp.weixin.qq.com/s?__biz=MzkzNTg1ODEwMA%3D%3D&mid=2247483920&idx=1&sn=087a83d8c64f32bc34abd0cbacf9a0d7&scene=21#wechat_redirect)
+
+![扫码加入 AI 新媒体搭子群](/images/posts/from-3-hours-to-3-minutes-workbuddy-ai-system/04.jpg)
