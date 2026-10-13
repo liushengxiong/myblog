@@ -37,11 +37,21 @@ featured: false
 
 这里有个小坑点，打开 WorkBuddy 后，我以为是先点击＋号，然后从连接器那里连接酷狗，结果找了一遍没有。
 
+![在技能里搜索酷狗](/images/posts/workbuddy-kugou-playlist/01.jpg)
+
 原来是放到技能里面了，点击＋号，然后点技能，点放大镜图标搜索酷狗就可以了。
+
+![连接酷狗技能](/images/posts/workbuddy-kugou-playlist/02.jpg)
 
 选中后，再输入一句话让 WorkBuddy 自己链接，然后用酷狗扫一下二维码就可以（在酷狗 APP-我的-设置-左上角扫一扫）
 
+![用酷狗扫描二维码](/images/posts/workbuddy-kugou-playlist/03.jpg)
+
+![酷狗授权成功](/images/posts/workbuddy-kugou-playlist/04.jpg)
+
 链接好之后，就比较简单了，直接说出自己的需求，WorkBuddy 就乖乖的自己去干活去了。
+
+![向 WorkBuddy 描述需求](/images/posts/workbuddy-kugou-playlist/05.jpg)
 
 ## 02 怎么解决歌单里面有 VIP 歌曲的问题
 
@@ -53,9 +63,13 @@ featured: false
 
 结果——果然失败了，说是文字太小，无法识别！
 
+![发送歌单截图但识别失败](/images/posts/workbuddy-kugou-playlist/06.jpg)
+
 经过排查，我终于找到问题，因为我为了省积分，选了免积分的 HY3 模型，它识别图片不太行。
 
 于是，我换了一个会消耗积分的：均衡模型，果然，问题一下子就解决了。
+
+![切换到均衡模型后成功处理](/images/posts/workbuddy-kugou-playlist/07.jpg)
 
 以前，这件事需要我自己打开歌单，逐首检查，再手动删除。
 
@@ -100,3 +114,5 @@ featured: false
 对了，我最近建了一个 AI 新媒体搭子群，里面都是一起做 AI 新媒体的小伙伴，遇到问题会一起讨论解决，现在已经有 20 人了，如果你感兴趣，也可以加我加入，详细介绍可以看这篇文章：
 
 [我决定建一个 AI 新媒体搭子群，第一期只收 5 元](https://mp.weixin.qq.com/s?__biz=MzkzNTg1ODEwMA%3D%3D&mid=2247483920&idx=1&sn=087a83d8c64f32bc34abd0cbacf9a0d7&scene=21#wechat_redirect)
+
+![扫码加入 AI 新媒体搭子群](/images/posts/workbuddy-kugou-playlist/08.jpg)

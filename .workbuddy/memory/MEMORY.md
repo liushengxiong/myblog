@@ -8,7 +8,15 @@
 - Slug 规则（`src/lib/github.ts` `validateSlug`）：`^[a-z0-9]+(?:-[a-z0-9]+)*$`，长度 2–120，只含小写字母/数字/连字符。中文文章也用英文名 slug 即可（站点首个 zh 文章 `why-i-built-this-website` 即用英文 slug）。
 - 约定：英文文件在基础 slug 后加 `-en`（如 `foo.md` + `foo-en.md`）。
 - 列表/首页按 `dateFormatted` 倒序；`featured` 字段当前未被列表使用。
-- 文章正文支持 Markdown（## 标题、列表、行内链接等）；模板无封面图字段，无需配图。
+- 文章正文支持 Markdown（## 标题、图片、列表、行内链接等）；模板无封面图字段，但正文截图/配图需按下方规范一并下载并插入对应位置。
+
+## 文章配图处理规范
+- 从微信公众号同步文章到博客时，正文中的截图/图片必须一起搬运，放在原文章对应位置。
+- 下载位置：`public/images/posts/{slug}/`，图片按文章出现顺序命名为 `01.jpg`、`02.jpg`...（扩展名按实际 Content-Type 取 jpg/png/gif）。
+- 在 Markdown 中对应位置插入 `![alt 文本](/images/posts/{slug}/01.jpg)`，alt 文本简要描述截图内容。
+- 抓取方法：用 `fetch` 拉取公众号文章 HTML，截取 `id="js_content"` 区域，按 `<img>` 标签分割得到图片顺序与 surrounding text 的对应关系，再逐一下载 `data-src`/`src` 到本地。
+- 注意：WeChat CDN 图片（mmbiz.qpic.cn）可能需要 Referer 为 `https://mp.weixin.qq.com/` 或留空，下载失败时做重试。
+
 
 ## 构建/验证 (Build)
 - 站点为 Astro + `@astrojs/vercel/serverless` hybrid 输出，产物目录是 `.vercel/output/static/`（不是 `dist/`）。
